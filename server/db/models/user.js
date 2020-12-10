@@ -3,6 +3,24 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const User = db.define('user', {
+  isAdmin: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
+  firstName: {
+    type: Sequelize.STRING
+    // allowNull: false,
+    // validate: {
+    //   isEmpty: true
+    // }
+  },
+  lastName: {
+    type: Sequelize.STRING
+    // allowNull: false,
+    // validate: {
+    //   isEmpty: true
+    // }
+  },
   email: {
     type: Sequelize.STRING,
     unique: true,

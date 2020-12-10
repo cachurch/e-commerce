@@ -1,18 +1,62 @@
 'use strict'
 
 const db = require('../server/db')
-const {User} = require('../server/db/models')
+const {User, Product, Order} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
 
   const users = await Promise.all([
-    User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'})
+    User.create({
+      isAdmin: true,
+      firstName: 'Cody',
+      lastName: 'Pug',
+      email: 'cody@email.com',
+      password: '123'
+    }),
+    User.create({
+      isAdmin: true,
+      firstName: 'Murphy',
+      lastName: 'Cat',
+      email: 'murphy@email.com',
+      password: '123'
+    })
+  ])
+
+  const products = await Promise.all([
+    Product.create({
+      artist: 'Franz Kline',
+      title: 'Untitled',
+      imageUrl:
+        'https://d7hftxdivxxvm.cloudfront.net/?resize_to=fit&width=390&height=300&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FJQI2YbnwwGCiT7dHH41_9A%2Flarge.jpg',
+      price: 50000
+    }),
+    Product.create({
+      artist: 'Franz Kline',
+      title: 'Study for High Street',
+      imageUrl:
+        'http://www.artnet.com/WebServices/images/ll00006lldaXbJFgPjECfDrCWvaHBOcCRzF/franz-kline-study-for-high-street.jpg',
+      price: 35000
+    }),
+    Product.create({
+      artist: 'Franz Kline',
+      title: 'Ochre and Grey Composition',
+      imageUrl:
+        'http://www.artnet.com/WebServices/images/ll00045lldKXbJFg03G72CfDrCWvaHBOc3eyF/franz-kline-ochre-and-grey-composition.jpg',
+      price: 35000
+    })
+  ])
+
+  const orders = await Promise.all([
+    Order.create({
+      isComplete: false
+    })
   ])
 
   console.log(`seeded ${users.length} users`)
+  console.log(`seeded ${products.length} products`)
+  console.log(`seeded ${orders.length} orders`)
   console.log(`seeded successfully`)
 }
 
