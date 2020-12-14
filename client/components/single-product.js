@@ -1,8 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {fetchProducts, fetchProduct} from '../store/product'
-import './style/single-products.css'
+import {fetchProduct} from '../store/product'
+import './style/single-product.css'
 
 export class SingleProduct extends React.Component {
   constructor(props) {
@@ -11,25 +11,26 @@ export class SingleProduct extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchProduct()
+    this.props.fetchProduct(this.props.match.params.id)
   }
 
   render() {
-    const products = this.props.products || []
-    console.log(products)
+    const product = this.props.product || {}
+    console.log('product: ', product)
     console.log('state > ', this.state)
     console.log('props > ', this.props)
+    console.log('params > ', this.props.params)
 
     return (
       <div>
-        <div className="all-products">
-          {products.map(product => (
-            <div key={product.id}>
-              <Link to={`products/${product.id}`}>
-                <img src={product.imageUrl} className="product-img" width="" />
-              </Link>
-            </div>
-          ))}
+        <div className="single-product">
+          <img src={product.imageUrl} />
+          <div className="single-product-info">
+            <h3>{product.artist}</h3>
+            <p>{product.title}</p>
+            <p>${product.price}.00</p>
+            <button type="button">Add to Cart</button>
+          </div>
         </div>
       </div>
     )
@@ -37,7 +38,7 @@ export class SingleProduct extends React.Component {
 }
 
 const mapState = state => {
-  return {products: state.product.products}
+  return {product: state.product}
 }
 
 const mapDispatch = dispatch => ({

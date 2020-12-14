@@ -16,9 +16,9 @@ export class AllProducts extends React.Component {
 
   render() {
     const products = this.props.products || []
-    console.log(products)
-    console.log('state > ', this.state)
-    console.log('props > ', this.props)
+    // console.log(products)
+    // console.log('state > ', this.state)
+    // console.log('props > ', this.props)
 
     return (
       <div>

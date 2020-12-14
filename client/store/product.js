@@ -26,7 +26,6 @@ const initialState = {
 export const fetchProducts = () => async dispatch => {
   try {
     const {data} = await axios.get('/api/products')
-    console.log('THUNK')
     dispatch(gotProducts(data))
   } catch (error) {
     console.error(error)
@@ -36,7 +35,7 @@ export const fetchProducts = () => async dispatch => {
 export const fetchProduct = id => async dispatch => {
   try {
     const {data} = await axios.get(`/api/products/${id}`)
-
+    console.log('SINGLE PRODUCT THUNK')
     dispatch(gotProduct(data))
   } catch (error) {
     console.error(error)
