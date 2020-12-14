@@ -1,7 +1,12 @@
-nav a {
-  color: #bbbbbb;
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* position: fixed; */
+  background-color: white;
+  padding: 10px 0px;
 }
 
-h1 {
-  color: black;
+nav a {
+  color: #bbbbbb;
 }
