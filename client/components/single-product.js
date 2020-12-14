@@ -2,16 +2,16 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {fetchProducts, fetchProduct} from '../store/product'
-import './style/all-products.css'
+import './style/single-products.css'
 
-export class AllProducts extends React.Component {
+export class SingleProduct extends React.Component {
   constructor(props) {
     super(props)
     this.state = {}
   }
 
   componentDidMount() {
-    this.props.fetchProducts()
+    this.props.fetchProduct()
   }
 
   render() {
@@ -41,8 +41,7 @@ const mapState = state => {
 }
 
 const mapDispatch = dispatch => ({
-  fetchProducts: () => dispatch(fetchProducts()),
   fetchProduct: id => dispatch(fetchProduct(id))
 })
 
-export default connect(mapState, mapDispatch)(AllProducts)
+export default connect(mapState, mapDispatch)(SingleProduct)
