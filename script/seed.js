@@ -29,7 +29,7 @@ async function seed() {
       artist: 'Franz Kline',
       title: 'Untitled',
       imageUrl:
-        'https://d7hftxdivxxvm.cloudfront.net/?resize_to=fit&width=390&height=300&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FJQI2YbnwwGCiT7dHH41_9A%2Flarge.jpg',
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT34nJ7Toy2gPoh4ZAc8ks0RQ6Kfkdw7_3Ggg&usqp=CAU',
       price: 50000
     }),
     Product.create({
@@ -45,6 +45,122 @@ async function seed() {
       imageUrl:
         'http://www.artnet.com/WebServices/images/ll00045lldKXbJFg03G72CfDrCWvaHBOc3eyF/franz-kline-ochre-and-grey-composition.jpg',
       price: 35000
+    }),
+    Product.create({
+      artist: 'Franz Kline',
+      title: 'Mahoning',
+      imageUrl:
+        'https://galleryintell.com/wp-content/uploads/2013/10/Franz-Kline_Mahoning-1956_ArtEx.jpg',
+      price: 35000
+    }),
+    Product.create({
+      artist: 'Franz Kline',
+      title: 'Mahoning',
+      imageUrl:
+        'https://miro.medium.com/max/6636/1*cr0GmNSI1pZQ1XYdu_OE4A.jpeg',
+      price: 35000
+    }),
+    Product.create({
+      artist: 'Donald Judd',
+      title: 'Suite of five chairs #84/85',
+      imageUrl: 'https://moussemagazine.it/app/uploads/1-44.jpg',
+      price: 35000
+    }),
+    Product.create({
+      artist: 'Donald Judd',
+      title: 'Untitled',
+      imageUrl:
+        'https://www.gallery.ca/sites/default/files/styles/ngc_crop_16x9_1600px/public/herojudd.jpg?itok=Q1lqynEp&timestamp=1556744190',
+      price: 35000
+    }),
+    Product.create({
+      artist: 'Donald Judd',
+      title: 'Untitled',
+      imageUrl:
+        'https://s31531.pcdn.co/wp-content/uploads/2018/05/GettyImages-564086751-1024x683.jpg',
+      price: 35000
+    }),
+    Product.create({
+      artist: 'Donald Judd',
+      title: 'Untitled',
+      imageUrl:
+        'https://www.moma.org/d/assets/W1siZiIsIjIwMTkvMDQvMjkvNjVzM3QyeTZ3NV9Eb25hbGRfSnVkZC5qcGciXSxbInAiLCJjb252ZXJ0IiwiLXF1YWxpdHkgOTAgLXJlc2l6ZSAyMDAweDIwMDBcdTAwM2UiXV0/Donald-Judd.jpg?sha=b36f61d3a3379dad',
+      price: 35000
+    }),
+    Product.create({
+      artist: 'Donald Judd',
+      title: 'Table',
+      imageUrl:
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5fdWElt0Rz-agGHTrTLAspTqi6NR3WDHcfQ&usqp=CAU',
+      price: 35000
+    }),
+    Product.create({
+      artist: 'Richard Serra',
+      title: 'Untitled',
+      imageUrl:
+        'https://d32dm0rphc51dk.cloudfront.net/a9TW7Jy8LwIUsZ8w2sPTwg/large.jpg',
+      price: 35000
+    }),
+    Product.create({
+      artist: 'Richard Serra',
+      title: 'To Lift',
+      imageUrl:
+        'https://www.glenstone.org/wp-content/uploads/prod/2018/08/SERRr_GF_ToLift-731x548.jpg',
+      price: 350000
+    }),
+    Product.create({
+      artist: 'Richard Serra',
+      title: 'To Lift',
+      imageUrl:
+        'https://www.glenstone.org/wp-content/uploads/prod/2018/07/SERRr_GF_Contour290_01-731x548.jpg',
+      price: 350000
+    }),
+    Product.create({
+      artist: 'Richard Serra',
+      title: 'Untitled',
+      imageUrl: 'https://farticulate.files.wordpress.com/2010/12/15269aa4.jpg',
+      price: 350000
+    }),
+    Product.create({
+      artist: 'Richard Serra',
+      title: 'Double Rift',
+      imageUrl:
+        'https://medias.slash-paris.com/main_images/images/000/010/636/richard_serra_galerie_lelong_paris_exposition-1_large.jpg?1519062386',
+      price: 350000
+    }),
+    Product.create({
+      artist: 'Sol Lewitt',
+      title: 'Drawing #278',
+      imageUrl:
+        'https://www.nationalgalleries.org/sites/default/files/LeWitt-desktopLarge.jpg',
+      price: 350000
+    }),
+    Product.create({
+      artist: 'Sol Lewitt',
+      title: 'Drawing #1741',
+      imageUrl:
+        'https://massmoca.org/wp-content/uploads/2015/11/Sol-LeWitt-Partnership.jpg',
+      price: 350000
+    }),
+    Product.create({
+      artist: 'Sol Lewitt',
+      title: 'Drawing #2165',
+      imageUrl: 'https://massmoca.org/wp-content/uploads/2015/12/289-1.jpg',
+      price: 350000
+    }),
+    Product.create({
+      artist: 'Sol Lewitt',
+      title: 'Drawing #416',
+      imageUrl:
+        'https://aestheticamagazine.com/wp-content/uploads/2016/10/Sol-Lewitt.png',
+      price: 350000
+    }),
+    Product.create({
+      artist: 'Sol Lewitt',
+      title: 'Untitled',
+      imageUrl:
+        'https://www.dorotheum.com/fileadmin/lot-images/38M180517/hires/sol-lewitt-5190017.jpg',
+      price: 350000
     })
   ])
 

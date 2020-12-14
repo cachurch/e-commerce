@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {fetchProducts, fetchProduct} from '../store/product'
+import './style/all-products.css'
 
 export class AllProducts extends React.Component {
   constructor(props) {
@@ -20,15 +21,15 @@ export class AllProducts extends React.Component {
     console.log('props > ', this.props)
 
     return (
-      <div>
-        <div id="allProducts">
+      <div className="img-cards">
+        <div className="all-products">
           {products.map(product => (
             <div key={product.id}>
               <Link to={`products/${product.id}`}>
                 <img
                   src={product.imageUrl}
-                  className="productImg"
-                  height="250px"
+                  className="product-img"
+                  // height="250px"
                   width=""
                 />
               </Link>
