@@ -21,7 +21,7 @@ export class AllProducts extends React.Component {
     console.log('props > ', this.props)
 
     return (
-      <div className="img-cards">
+      <div>
         <div className="all-products">
           {products.map(product => (
             <div key={product.id}>
