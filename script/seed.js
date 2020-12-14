@@ -161,6 +161,74 @@ async function seed() {
       imageUrl:
         'https://www.dorotheum.com/fileadmin/lot-images/38M180517/hires/sol-lewitt-5190017.jpg',
       price: 350000
+    }),
+    Product.create({
+      artist: 'Mark Di Suvero',
+      title: 'Untitled',
+      imageUrl:
+        'https://www.theparisreview.org/blog/wp-content/uploads/2016/05/pl001.png',
+      price: 350000
+    }),
+    Product.create({
+      artist: 'Mark Di Suvero',
+      title: 'Untitled',
+      imageUrl:
+        'https://s3-external-1.amazonaws.com/veevartnaresized/00D4100000061zzEAA/a1641000000W9hjAAC/File-2089_medium.jpeg',
+      price: 350000
+    }),
+    Product.create({
+      artist: 'Mark Di Suvero',
+      title: 'Untitled',
+      imageUrl:
+        'https://d32dm0rphc51dk.cloudfront.net/s7YzF_xzJbGYwGghjEnhAA/large.jpg',
+      price: 350000
+    }),
+    Product.create({
+      artist: 'Mark Di Suvero',
+      title: 'Untitled',
+      imageUrl: 'http://www.nyartbeat.com/media/event/2020/F64F-620',
+      price: 350000
+    }),
+    Product.create({
+      artist: 'Mark Di Suvero',
+      title: 'Sculpture #15',
+      imageUrl:
+        'https://d7hftxdivxxvm.cloudfront.net/?resize_to=fit&width=450&height=300&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FWGHY0m1ce5RCqFqJiHwzhg%2Flarge.jpg',
+      price: 350000
+    }),
+    Product.create({
+      artist: 'Clyfford Still',
+      title: 'PH-389',
+      imageUrl:
+        'https://2aiyw71zf9ht13dm9ge29mr1-wpengine.netdna-ssl.com/wp-content/uploads/2020/08/homehero_lateworks_ph389detail.jpg',
+      price: 350000
+    }),
+    Product.create({
+      artist: 'Clyfford Still',
+      title: 'PH-123',
+      imageUrl: 'https://whitneymedia.org/assets/artwork/16291/193376.jpeg',
+      price: 350000
+    }),
+    Product.create({
+      artist: 'Clyfford Still',
+      title: 'PH-972',
+      imageUrl:
+        'https://wp-cpr.s3.amazonaws.com/uploads/2019/06/clyfford_orange-2.jpg',
+      price: 350000
+    }),
+    Product.create({
+      artist: 'Clyfford Still',
+      title: 'PH-364',
+      imageUrl:
+        'https://southwestcontemporary.com/wp-content/uploads/2019/12/PH-432.jpg',
+      price: 350000
+    }),
+    Product.create({
+      artist: 'Clyfford Still',
+      title: 'PH-364',
+      imageUrl:
+        'https://uploads7.wikiart.org/images/clyfford-still/untitled-1974.jpg',
+      price: 350000
     })
   ])
 
