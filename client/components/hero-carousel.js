@@ -16,7 +16,7 @@ export default class SimpleSlider extends Component {
         <Slider {...settings}>
           <div>
             <img
-              src="https://whitneymedia.org/assets/artwork/16291/193376.jpeg"
+              src="https://wp-cpr.s3.amazonaws.com/uploads/2019/06/clyfford_orange-2.jpg"
               className="carousel-slide"
             />
             <h3 />
@@ -37,6 +37,13 @@ export default class SimpleSlider extends Component {
           </div>
           <div>
             <img
+              src="https://farticulate.files.wordpress.com/2010/12/15269aa4.jpg"
+              className="carousel-slide"
+            />
+            <h3 />
+          </div>
+          <div>
+            <img
               src="https://www.glenstone.org/wp-content/uploads/prod/2018/08/SERRr_GF_ToLift-731x548.jpg"
               className="carousel-slide"
             />
@@ -44,7 +51,7 @@ export default class SimpleSlider extends Component {
           </div>
           <div>
             <img
-              src="https://miro.medium.com/max/6636/1*cr0GmNSI1pZQ1XYdu_OE4A.jpeg"
+              src="https://medias.slash-paris.com/main_images/images/000/010/636/richard_serra_galerie_lelong_paris_exposition-1_large.jpg?1519062386"
               className="carousel-slide"
             />
             <h3 />
