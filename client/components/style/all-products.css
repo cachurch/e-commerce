@@ -3,6 +3,9 @@
   /* align-items: center;
   justify-content: space-between;
   flex-wrap: wrap */
+.carousel-container {
+  margin-bottom: 40px;
+}
 
 .all-products {
   display: flex;

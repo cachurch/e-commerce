@@ -16,15 +16,19 @@ export class SingleProduct extends React.Component {
 
   render() {
     const product = this.props.product || {}
-    console.log('product: ', product)
-    console.log('state > ', this.state)
-    console.log('props > ', this.props)
-    console.log('params > ', this.props.params)
+    // console.log('product: ', product)
+    // console.log('state > ', this.state)
+    // console.log('props > ', this.props)
+    // console.log('params > ', this.props.params)
 
     return (
       <div>
         <div className="single-product">
-          <img src={product.imageUrl} />
+          <img
+            src={product.imageUrl}
+            className="single-product-img"
+            // width="800px"
+          />
           <div className="single-product-info">
             <h3>{product.artist}</h3>
             <p>{product.title}</p>

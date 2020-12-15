@@ -9,7 +9,9 @@ const Navbar = ({handleClick, isLoggedIn}) => (
   <div>
     <nav>
       <div>
-        <h1>WHITEWALL</h1>
+        <h1>
+          <Link to="/products">WHITEWALL</Link>
+        </h1>
       </div>
       {isLoggedIn ? (
         <div className="navLinks">

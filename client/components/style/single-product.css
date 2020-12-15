@@ -1,6 +1,12 @@
 .single-product {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%;
+  display: flex;
+  /* justify-content: space-between; */
+}
+
+.single-product-info {
+  padding-left: 30px;
+}
+
+.single-product-img {
+  width: 800px;
 }

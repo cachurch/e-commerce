@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {fetchProducts, fetchProduct} from '../store/product'
 import './style/all-products.css'
+import Carousel from './hero-carousel'
 
 export class AllProducts extends React.Component {
   constructor(props) {
@@ -22,11 +23,14 @@ export class AllProducts extends React.Component {
 
     return (
       <div>
+        <div className="carousel-container">
+          <Carousel />
+        </div>
         <div className="all-products">
           {products.map(product => (
             <div key={product.id}>
               <Link to={`products/${product.id}`}>
-                <img src={product.imageUrl} className="product-img" width="" />
+                <img src={product.imageUrl} className="product-img" />
               </Link>
             </div>
           ))}
