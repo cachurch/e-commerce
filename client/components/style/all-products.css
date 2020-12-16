@@ -10,13 +10,14 @@
 .all-products {
   display: flex;
   align-items: center;
-  /* justify-content: space-between; */
+  justify-content: center;
   flex-wrap: wrap;
 }
 
 .product-img {
-  margin-right: 20px;
-  margin-bottom: 20px;
+  /* margin-right: 20px;
+  margin-bottom: 20px; */
+  margin: 10px;
   width: 425px;
   height: 250px;
   object-fit: cover;
