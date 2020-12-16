@@ -6,10 +6,15 @@ export default class SimpleSlider extends Component {
   render() {
     const settings = {
       dots: true,
+      arrows: true,
       infinite: true,
-      speed: 500,
+      speed: 4000,
       slidesToShow: 1,
-      slidesToScroll: 1
+      slidesToScroll: 1,
+      autoplay: true,
+      autoplaySpeed: 4000,
+      pauseOnHover: true,
+      cssEase: 'linear'
     }
     return (
       <div>
