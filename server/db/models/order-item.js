@@ -15,27 +15,33 @@ const OrderItem = db.define('orderItem', {
   productPrice: {
     type: Sequelize.INTEGER
   },
-  //the combined price of all items
+  //the combined price for all items (single product)
   totalPrice: {
     type: Sequelize.INTEGER
   }
 })
 
-OrderItem.prototype.add = async function(price) {
+OrderItem.prototype.add = async function() {
   try {
     this.quantity++
-    this.productPrice = this.quantity * this.productPrice
+    this.totalPrice = this.quantity * this.productPrice
     await this.save()
   } catch (error) {
     console.error(error)
   }
 }
 
-OrderItem.prototype.delete = async function(price) {
+OrderItem.prototype.delete = async function() {
   try {
     if (this.quantity >= 1) {
       this.quantity--
+      this.totalPrice = this.quantity * this.productPrice
+    } else {
+      this.quantity = 0
+      this.totalPrice = 0
     }
+
+    await this.save()
   } catch (error) {
     console.error(error)
   }
