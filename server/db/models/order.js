@@ -13,4 +13,19 @@ const Order = db.define('order', {
   }
 })
 
+Order.prototype.getTotal = async function(id) {
+  try {
+    const items = await OrderItem.findAll({
+      where: {id: id}
+    })
+    for (let key in items) {
+      if (this.isComplete === false) {
+        this.orderTotal += items[key].totalPrice
+      }
+    }
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 module.exports = Order
