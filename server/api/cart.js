@@ -4,25 +4,6 @@ const {Order} = require('../db/models')
 const {OrderItem} = require('../db/models')
 module.exports = router
 
-// const isLoggedIn = (req, res, next) => {
-//   let user
-//   if (!req.user) {
-//     user = {}
-//   } else {
-//     user = req.user.dataVales
-//   }
-// }
-
-// router.get('/:id', isLoggedIn, async (req, res, next) => {
-//   try {
-//     const cart = await OrderItem.findAll({where: {orderId: req.params.id}})
-//     res.json(cart)
-//   } catch (error) {
-//     next(error)
-//   }
-// })
-
-//Finds existing carts or creates new carts for logged in users and guests
 router.get('/', async (req, res, next) => {
   try {
     if (req.user) {
@@ -37,19 +18,34 @@ router.get('/', async (req, res, next) => {
         res.json(userCart)
       }
     } else {
-      // const guestCart = await Order.findOrCreate({
-      //   where: {userId: req.session.cart.id, isComplete: false},
-      //   include: [{model: Product}]
-      // })
-      // console.log('REQ.SESSION >>>>> ', req.session)
-      // console.log('DATAVALUES >>>>> ', req.session.cart)
-      // res.json(guestCart)
-      const guestCart = new Order(req.session.order ? req.session.order : {})
-      req.session.order = guestCart
-      console.log('req.session.cart >>>', req.session.order.dataValues)
+      const guestCart = await Order.findAll({
+        where: {id: req.session.order.id, isComplete: false},
+        include: [{model: Product}]
+      })
       res.json(guestCart)
     }
   } catch (err) {
     next(err)
+  }
+})
+
+router.post('/', async (req, res, next) => {
+  try {
+    //Creates a cart for guests and users > methods need to be updated to find or create
+    if (!req.user) {
+      const guestCart = await Order.create({
+        include: [{model: Product}]
+      })
+      req.session.order.id = guestCart.dataValues.id
+      res.json(guestCart)
+    } else {
+      const userCart = await Order.create({
+        where: {userId: req.user.id},
+        include: [{model: Product}]
+      })
+      res.json(userCart)
+    }
+  } catch (error) {
+    next(error)
   }
 })
