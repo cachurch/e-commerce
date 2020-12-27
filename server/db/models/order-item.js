@@ -6,11 +6,13 @@ const Product = require('./product')
 const OrderItem = db.define('orderItem', {
   id: {
     type: Sequelize.INTEGER,
-    primaryKey: true
+    primaryKey: true,
+    autoIncrement: true
   },
   //The amount of items in an order
   quantity: {
-    type: Sequelize.INTEGER
+    type: Sequelize.INTEGER,
+    defaultValue: 0
   },
   //the price for a single unit of that item
   productPrice: {
@@ -22,6 +24,7 @@ const OrderItem = db.define('orderItem', {
   }
 })
 
+//general idea?
 OrderItem.prototype.add = async function() {
   try {
     this.quantity++
