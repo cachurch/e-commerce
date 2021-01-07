@@ -66,11 +66,7 @@ router.post('/', async (req, res, next) => {
           where: {id: req.session.order.id, isComplete: false},
           include: [{model: Product}]
         })
-        console.log(
-          '>>>>>> POST REQ.SESSION >>>>>>> ',
-          req.session.id,
-          req.session
-        )
+        // console.log('>>>>>> POST REQ.SESSION >>>>>>> ', req.session.id,req.session)
         // console.log('guestCart >>>>>>>>>>>>>>> ', guestCart)
         const newItem = await OrderItem.create({
           productId: req.body.productId,
@@ -119,7 +115,6 @@ router.post('/', async (req, res, next) => {
 })
 
 // //----------------------------------------------------------------------------
-
 //  // req.session = {}
 //  if (req.session.order) {
 //   const guestCart = await Order.findOne({

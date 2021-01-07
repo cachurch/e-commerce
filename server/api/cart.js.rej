@@ -1,0 +1,10 @@
+diff a/server/api/cart.js b/server/api/cart.js	(rejected hunks)
+@@ -68,2 +68,6 @@ router.post('/', async (req, res, next) => {
+-        }) 
+-        console.log('>>>>>> POST REQ.SESSION >>>>>>> ', req.session.id,req.session)
++        })
++        console.log(
++          '>>>>>> POST REQ.SESSION >>>>>>> ',
++          req.session.id,
++          req.session
++        )
