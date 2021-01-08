@@ -1,9 +1,10 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {fetchProducts, fetchProduct} from '../store/product'
+import {fetchProducts, fetchProduct, addProduct} from '../store/product'
 import './style/all-products.css'
 import Carousel from './hero-carousel'
+import ProductForm from './product-form'
 
 export class AllProducts extends React.Component {
   constructor(props) {
@@ -32,8 +33,12 @@ export class AllProducts extends React.Component {
               <Link to={`products/${product.id}`}>
                 <img src={product.imageUrl} className="product-img" />
               </Link>
+              <br />
             </div>
           ))}
+        </div>
+        <div>
+          <ProductForm addProduct={this.props.addProduct} />
         </div>
       </div>
     )
@@ -46,7 +51,8 @@ const mapState = state => {
 
 const mapDispatch = dispatch => ({
   fetchProducts: () => dispatch(fetchProducts()),
-  fetchProduct: id => dispatch(fetchProduct(id))
+  fetchProduct: id => dispatch(fetchProduct(id)),
+  addProduct: newProduct => dispatch(addProduct(newProduct))
 })
 
 export default connect(mapState, mapDispatch)(AllProducts)

@@ -3,6 +3,7 @@ import axios from 'axios'
 //ACTION CREATORS
 const GOT_PRODUCTS = 'GOT_PRODUCTS'
 const GOT_PRODUCT = 'GOT_PRODUCT'
+const ADDED_PRODUCT = 'ADDED_PRODUCT'
 
 //ACTION TYPES
 const gotProducts = products => ({
@@ -13,6 +14,11 @@ const gotProducts = products => ({
 const gotProduct = id => ({
   type: GOT_PRODUCT,
   id
+})
+
+const addedProduct = newProduct => ({
+  type: ADDED_PRODUCT,
+  newProduct
 })
 
 //INITIAL STATE
@@ -35,8 +41,16 @@ export const fetchProducts = () => async dispatch => {
 export const fetchProduct = id => async dispatch => {
   try {
     const {data} = await axios.get(`/api/products/${id}`)
-    console.log('SINGLE PRODUCT THUNK')
     dispatch(gotProduct(data))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const addProduct = newProduct => async dispatch => {
+  try {
+    const {data} = await axios.post('/api/products', newProduct)
+    dispatch(addedProduct(data))
   } catch (error) {
     console.error(error)
   }
@@ -53,6 +67,11 @@ export default function product(state = initialState, action) {
       }
     case GOT_PRODUCT:
       return action.id
+    case ADDED_PRODUCT:
+      return {
+        ...state,
+        products: [...state.products, action.newProduct]
+      }
     default:
       return state
   }

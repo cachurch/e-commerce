@@ -2,14 +2,14 @@ const router = require('express').Router()
 const {Product} = require('../db/models')
 module.exports = router
 
-const isAdmin = (req, res, next) => {
-  if (!req.user.isAdmin || !req.user) {
-    const error = new Error('Unauthorized')
-    next(error)
-  } else {
-    next()
-  }
-}
+// const isAdmin = (req, res, next) => {
+//   if (!req.user.isAdmin || !req.user) {
+//     const error = new Error('Unauthorized')
+//     next(error)
+//   } else {
+//     next()
+//   }
+// }
 
 router.get('/', async (req, res, next) => {
   try {
@@ -29,7 +29,7 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
-router.post('/', isAdmin, async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   try {
     const newProduct = await Product.create(req.body)
     res.json(newProduct)
@@ -38,7 +38,7 @@ router.post('/', isAdmin, async (req, res, next) => {
   }
 })
 
-router.delete('/:id', isAdmin, async (req, res, next) => {
+router.delete('/:id', async (req, res, next) => {
   try {
     await Product.destroy({
       where: {id: req.params.id}
