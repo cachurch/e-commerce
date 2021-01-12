@@ -4,6 +4,7 @@ import axios from 'axios'
 const GOT_PRODUCTS = 'GOT_PRODUCTS'
 const GOT_PRODUCT = 'GOT_PRODUCT'
 const ADDED_PRODUCT = 'ADDED_PRODUCT'
+const DELETED_PRODUCT = 'DELETED_PRODUCT'
 
 //ACTION TYPES
 const gotProducts = products => ({
@@ -19,6 +20,11 @@ const gotProduct = id => ({
 const addedProduct = newProduct => ({
   type: ADDED_PRODUCT,
   newProduct
+})
+
+const deletedProduct = id => ({
+  type: DELETED_PRODUCT,
+  id
 })
 
 //INITIAL STATE
@@ -56,6 +62,15 @@ export const addProduct = newProduct => async dispatch => {
   }
 }
 
+export const deleteProduct = id => async dispatch => {
+  try {
+    await axios.delete(`/api/products/${id}`)
+    dispatch(deletedProduct(id))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 //REDUCER
 
 export default function product(state = initialState, action) {
@@ -71,6 +86,11 @@ export default function product(state = initialState, action) {
       return {
         ...state,
         products: [...state.products, action.newProduct]
+      }
+    case DELETED_PRODUCT:
+      return {
+        ...state,
+        products: state.products.filter(deleted => deleted.id !== action.id)
       }
     default:
       return state

@@ -1,7 +1,12 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {fetchProducts, fetchProduct, addProduct} from '../store/product'
+import {
+  fetchProducts,
+  fetchProduct,
+  addProduct,
+  deleteProduct
+} from '../store/product'
 import './style/all-products.css'
 import Carousel from './hero-carousel'
 import ProductForm from './product-form'
@@ -18,9 +23,6 @@ export class AllProducts extends React.Component {
 
   render() {
     const products = this.props.products || []
-    // console.log(products)
-    // console.log('state > ', this.state)
-    // console.log('props > ', this.props)
 
     return (
       <div>
@@ -33,6 +35,12 @@ export class AllProducts extends React.Component {
               <Link to={`products/${product.id}`}>
                 <img src={product.imageUrl} className="product-img" />
               </Link>
+              <button
+                type="submit"
+                onClick={() => this.props.deleteProduct(product.id)}
+              >
+                Delete
+              </button>
               <br />
             </div>
           ))}
@@ -52,7 +60,8 @@ const mapState = state => {
 const mapDispatch = dispatch => ({
   fetchProducts: () => dispatch(fetchProducts()),
   fetchProduct: id => dispatch(fetchProduct(id)),
-  addProduct: newProduct => dispatch(addProduct(newProduct))
+  addProduct: newProduct => dispatch(addProduct(newProduct)),
+  deleteProduct: id => dispatch(deleteProduct(id))
 })
 
 export default connect(mapState, mapDispatch)(AllProducts)
