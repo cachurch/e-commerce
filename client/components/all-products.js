@@ -7,6 +7,7 @@ import {
   addProduct,
   deleteProduct
 } from '../store/product'
+import {me} from '../store/user'
 import './style/all-products.css'
 import Carousel from './hero-carousel'
 import ProductForm from './product-form'
@@ -19,10 +20,12 @@ export class AllProducts extends React.Component {
 
   componentDidMount() {
     this.props.fetchProducts()
+    this.props.me()
   }
 
   render() {
     const products = this.props.products || []
+    const user = this.props.user || {}
 
     return (
       <div>
@@ -35,18 +38,26 @@ export class AllProducts extends React.Component {
               <Link to={`products/${product.id}`}>
                 <img src={product.imageUrl} className="product-img" />
               </Link>
-              <button
-                type="submit"
-                onClick={() => this.props.deleteProduct(product.id)}
-              >
-                Delete
-              </button>
+              {user.isAdmin ? (
+                <button
+                  type="submit"
+                  onClick={() => this.props.deleteProduct(product.id)}
+                >
+                  Delete
+                </button>
+              ) : (
+                ''
+              )}
               <br />
             </div>
           ))}
         </div>
         <div>
-          <ProductForm addProduct={this.props.addProduct} />
+          {user.isAdmin ? (
+            <ProductForm addProduct={this.props.addProduct} />
+          ) : (
+            ''
+          )}
         </div>
       </div>
     )
@@ -54,14 +65,15 @@ export class AllProducts extends React.Component {
 }
 
 const mapState = state => {
-  return {products: state.product.products}
+  return {products: state.product.products, user: state.user}
 }
 
 const mapDispatch = dispatch => ({
   fetchProducts: () => dispatch(fetchProducts()),
   fetchProduct: id => dispatch(fetchProduct(id)),
   addProduct: newProduct => dispatch(addProduct(newProduct)),
-  deleteProduct: id => dispatch(deleteProduct(id))
+  deleteProduct: id => dispatch(deleteProduct(id)),
+  me: () => dispatch(me())
 })
 
 export default connect(mapState, mapDispatch)(AllProducts)
