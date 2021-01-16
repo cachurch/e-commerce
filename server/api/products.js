@@ -38,6 +38,16 @@ router.post('/', async (req, res, next) => {
   }
 })
 
+router.put('/:id', async (req, res, next) => {
+  try {
+    const selectedProduct = await Product.findByPk(req.params.id)
+    const updatedProduct = await selectedProduct.update(req.body)
+    res.json(updatedProduct)
+  } catch (error) {
+    next(error)
+  }
+})
+
 router.delete('/:id', async (req, res, next) => {
   try {
     await Product.destroy({

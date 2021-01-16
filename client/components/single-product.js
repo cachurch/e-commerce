@@ -2,6 +2,8 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {fetchProduct} from '../store/product'
+import {me} from '../store/user'
+import EditProductForm from './edit-product-form'
 import './style/single-product.css'
 
 export class SingleProduct extends React.Component {
@@ -12,14 +14,12 @@ export class SingleProduct extends React.Component {
 
   componentDidMount() {
     this.props.fetchProduct(this.props.match.params.id)
+    this.props.me()
   }
 
   render() {
     const product = this.props.product || {}
-    // console.log('product: ', product)
-    // console.log('state > ', this.state)
-    // console.log('props > ', this.props)
-    // console.log('params > ', this.props.params)
+    const user = this.props.user || {}
 
     return (
       <div>
@@ -34,6 +34,15 @@ export class SingleProduct extends React.Component {
             <p>{product.title}</p>
             <p>${product.price}.00</p>
             <button type="button">Add to Cart</button>
+            {user.isAdmin ? (
+              <EditProductForm
+                product={this.props.product}
+                updateProduct={this.props.updateProduct}
+                id={product.id}
+              />
+            ) : (
+              ''
+            )}
           </div>
         </div>
       </div>
@@ -42,11 +51,12 @@ export class SingleProduct extends React.Component {
 }
 
 const mapState = state => {
-  return {product: state.product}
+  return {product: state.product, user: state.user}
 }
 
 const mapDispatch = dispatch => ({
-  fetchProduct: id => dispatch(fetchProduct(id))
+  fetchProduct: id => dispatch(fetchProduct(id)),
+  me: () => dispatch(me())
 })
 
 export default connect(mapState, mapDispatch)(SingleProduct)
