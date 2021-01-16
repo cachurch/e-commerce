@@ -39,12 +39,18 @@ export class AllProducts extends React.Component {
                 <img src={product.imageUrl} className="product-img" />
               </Link>
               {user.isAdmin ? (
-                <button
-                  type="submit"
-                  onClick={() => this.props.deleteProduct(product.id)}
-                >
-                  Delete
-                </button>
+                <div>
+                  <button type="submit">
+                    <Link to={`products/${product.id}`}>Edit Artwork</Link>
+                  </button>
+                  <button
+                    type="submit"
+                    onClick={() => this.props.deleteProduct(product.id)}
+                  >
+                    Delete
+                  </button>
+                  <br />
+                </div>
               ) : (
                 ''
               )}
