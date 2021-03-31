@@ -16,4 +16,12 @@ function addToLocalStorage(product) {
   }
 }
 
-module.exports = {addToLocalStorage}
+function getCartFromLS() {
+  let cart = {items: {}, total: 0}
+  if (localStorage.getItem('cart')) {
+    cart = JSON.parse(localStorage.getItem('cart'))
+  }
+  return cart
+}
+
+module.exports = {addToLocalStorage, getCartFromLS}
