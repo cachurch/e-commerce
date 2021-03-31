@@ -41,9 +41,9 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    // // For testing the user -----------------
-    // if (req.user) req.user.id = 1
-    // else req.user = {id: 1}
+    // For testing the user -----------------
+    if (req.user) req.user.id = 1
+    else req.user = {id: 1}
     // -----------------------------------------
 
     //finds or creates open carts for users
@@ -60,55 +60,55 @@ router.post('/', async (req, res, next) => {
 
       res.json({userCart, newItem})
     } else {
-      const hello = 'hi'
-      if (req.session.order) {
-        const guestCart = await Order.findOne({
-          where: {id: req.session.order.id, isComplete: false},
-          include: [{model: Product}]
-        })
-        // console.log('>>>>>> POST REQ.SESSION >>>>>>> ', req.session.id,req.session)
-        // console.log('guestCart >>>>>>>>>>>>>>> ', guestCart)
-        const newItem = await OrderItem.create({
-          productId: req.body.productId,
-          orderId: guestCart.id
-        })
+      res.status(304).send('Please Login!')
+      // const hello = 'hi'
+      // if (req.session.order) {
+      //   const guestCart = await Order.findOne({
+      //     where: {id: req.session.order.id, isComplete: false},
+      //     include: [{model: Product}]
+      //   })
+      //   // console.log('>>>>>> POST REQ.SESSION >>>>>>> ', req.session.id,req.session)
+      //   // console.log('guestCart >>>>>>>>>>>>>>> ', guestCart)
+      //   const newItem = await OrderItem.create({
+      //     productId: req.body.productId,
+      //     orderId: guestCart.id
+      //   })
 
-        res.json({guestCart, newItem})
-      } else {
-        const guestCart = await Order.create({})
-        req.session.order = {}
-        req.session.order.id = guestCart.dataValues.id
+      //   res.json({guestCart, newItem})
+      // } else {
+      //   const guestCart = await Order.create({})
+      //   req.session.order = {}
+      //   req.session.order.id = guestCart.dataValues.id
 
-        const newItem = await OrderItem.create({
-          productId: req.body.productId,
-          orderId: guestCart.id
-        })
-        res.json({guestCart, newItem})
-      }
-
-      //-----------------------------------------------------------------------
-      // //Creates a cart for guests > method needs to be updated to find or create
-
-      // // req.session = {}
-
-      // const guestCart = await Order.findOrCreate({
-      //   where: {id: req.session.order.id, isComplete: false},
-      //   include: [{model: Product}]
-      // })
-
-      // const newItem = await OrderItem.create({
-      //   productId: req.body.productId,
-      //   orderId: guestCart[0].id
-      // })
-
-      // //This sets the order id just created to the order id on the session
-      // req.session.order.id = guestCart.dataValues.id
-
-      // //Add OrderItem create() method here
-
-      // res.json({guestCart, newItem})
-      //---------------------------------------------------------------------------------
+      //   const newItem = await OrderItem.create({
+      //     productId: req.body.productId,
+      //     orderId: guestCart.id
+      //   })
+      //   res.json({guestCart, newItem})
     }
+
+    //-----------------------------------------------------------------------
+    // //Creates a cart for guests > method needs to be updated to find or create
+
+    // // req.session = {}
+
+    // const guestCart = await Order.findOrCreate({
+    //   where: {id: req.session.order.id, isComplete: false},
+    //   include: [{model: Product}]
+    // })
+
+    // const newItem = await OrderItem.create({
+    //   productId: req.body.productId,
+    //   orderId: guestCart[0].id
+    // })
+
+    // //This sets the order id just created to the order id on the session
+    // req.session.order.id = guestCart.dataValues.id
+
+    // //Add OrderItem create() method here
+
+    // res.json({guestCart, newItem})
+    //---------------------------------------------------------------------------------
   } catch (error) {
     next(error)
   }

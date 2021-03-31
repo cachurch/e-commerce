@@ -5,6 +5,7 @@ import {fetchProduct} from '../store/product'
 import {me} from '../store/user'
 import EditProductForm from './edit-product-form'
 import './style/single-product.css'
+import {addToLocalStorage} from '../local-storage/local-storage'
 
 export class SingleProduct extends React.Component {
   constructor(props) {
@@ -21,6 +22,14 @@ export class SingleProduct extends React.Component {
     const product = this.props.product || {}
     const user = this.props.user || {}
 
+    function onClick() {
+      if (user.id) {
+        //{'do this'}
+      } else {
+        addToLocalStorage(product)
+      }
+    }
+
     return (
       <div>
         <div className="single-product">
@@ -33,7 +42,9 @@ export class SingleProduct extends React.Component {
             <h3>{product.artist}</h3>
             <p>{product.title}</p>
             <p>${product.price}.00</p>
-            <button type="button">Add to Cart</button>
+            <button type="button" onClick={onClick}>
+              Add to Cart
+            </button>
             {user.isAdmin ? (
               <EditProductForm
                 product={this.props.product}
