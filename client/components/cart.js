@@ -10,7 +10,11 @@ import {
 import {me} from '../store/user'
 import './style/all-products.css'
 import './style/cart-item-list.css'
-import {getCartFromLS, addToLocalStorage, removeFromLocalStorage} from '../local-storage/local-storage'
+import {
+  getCartFromLS,
+  addToLocalStorage,
+  removeFromLocalStorage
+} from '../local-storage/local-storage'
 
 export class Cart extends React.Component {
   constructor(props) {
@@ -21,28 +25,28 @@ export class Cart extends React.Component {
   }
 
   componentDidMount() {
-     this.props.me()
-    }
+    this.props.me()
+  }
 
-    //increase item in the cart
+  //increase item in the cart
   increase(product, user) {
-      if (user.id) {
-        //{'do this'}
-      } else {
-        addToLocalStorage(product)
-        this.setState({cart: getCartFromLS().items})
-      }
+    if (user.id) {
+      //{'do this'}
+    } else {
+      addToLocalStorage(product)
+      this.setState({cart: getCartFromLS().items})
     }
-    //decrease item in the cart
+  }
+  //decrease item in the cart
   decrease(product, user) {
-      console.dir(removeFromLocalStorage)
-      if (user.id) {
-        //{'do this'}
-      } else {
-        removeFromLocalStorage(product)
-        this.setState({cart: getCartFromLS().items})
-      }
+    console.dir(removeFromLocalStorage)
+    if (user.id) {
+      //{'do this'}
+    } else {
+      removeFromLocalStorage(product)
+      this.setState({cart: getCartFromLS().items})
     }
+  }
   render() {
     const user = this.props.user || {}
     //Pull in cart items from Local Storage & Change to an Array > Move this to the redux store
@@ -51,7 +55,6 @@ export class Cart extends React.Component {
     for (let key in this.state.cart) {
       items.push(this.state.cart[key])
     }
-    
 
     return (
       <div>
@@ -60,12 +63,32 @@ export class Cart extends React.Component {
           return (
             <div className="cart-item-list" key={item.product.id}>
               <img src={item.product.imageUrl} />
-              <div className="item-info"><p>{item.product.artist}</p></div>
-              <div className="item-info"><p>{item.product.title} </p></div>
-              <div className="item-info"><p>${item.product.price}.00 </p></div>
               <div className="item-info">
-                <button type="button" onClick={() => {this.increase(item.product, user)}}>+</button>
-                <button type="button" onClick={() => {this.decrease(item.product, user)}}>-</button>
+                <p>{item.product.artist}</p>
+              </div>
+              <div className="item-info">
+                <p>{item.product.title} </p>
+              </div>
+              <div className="item-info">
+                <p>${item.product.price}.00 </p>
+              </div>
+              <div className="item-info">
+                <button
+                  type="button"
+                  onClick={() => {
+                    this.increase(item.product, user)
+                  }}
+                >
+                  +
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    this.decrease(item.product, user)
+                  }}
+                >
+                  -
+                </button>
               </div>
             </div>
           )

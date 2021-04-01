@@ -18,21 +18,6 @@ router.get('/', async (req, res, next) => {
       } else {
         res.json(userCart)
       }
-    } else {
-      // console.log(req.session.id, req.session)
-      // Find an open cart for a guest
-      const guestCart = await Order.findAll({
-        // where: {id: req.session.order.id, isComplete: false},
-        // include: [{model: Product}]
-      })
-      //Send back cart data or a message that the cart is empty
-      res.json(guestCart)
-
-      // if (!guestCart || guestCart.products.length === 0) {
-      //   res.send('Your Cart is Empty!')
-      // } else {
-      //   res.json(guestCart)
-      // }
     }
   } catch (err) {
     next(err)
@@ -62,7 +47,6 @@ router.post('/', async (req, res, next) => {
       res.json({userCart, newItem})
     } else {
       res.status(304).send('Please Login!')
-
     }
   } catch (error) {
     next(error)
@@ -123,52 +107,53 @@ router.delete('/:id', async (req, res, next) => {
 })
 
 
-      // const hello = 'hi'
-      // if (req.session.order) {
-      //   const guestCart = await Order.findOne({
-      //     where: {id: req.session.order.id, isComplete: false},
-      //     include: [{model: Product}]
-      //   })
-      //   // console.log('>>>>>> POST REQ.SESSION >>>>>>> ', req.session.id,req.session)
-      //   // console.log('guestCart >>>>>>>>>>>>>>> ', guestCart)
-      //   const newItem = await OrderItem.create({
-      //     productId: req.body.productId,
-      //     orderId: guestCart.id
-      //   })
+//Notes
+// const hello = 'hi'
+// if (req.session.order) {
+//   const guestCart = await Order.findOne({
+//     where: {id: req.session.order.id, isComplete: false},
+//     include: [{model: Product}]
+//   })
+//   // console.log('>>>>>> POST REQ.SESSION >>>>>>> ', req.session.id,req.session)
+//   // console.log('guestCart >>>>>>>>>>>>>>> ', guestCart)
+//   const newItem = await OrderItem.create({
+//     productId: req.body.productId,
+//     orderId: guestCart.id
+//   })
 
-      //   res.json({guestCart, newItem})
-      // } else {
-      //   const guestCart = await Order.create({})
-      //   req.session.order = {}
-      //   req.session.order.id = guestCart.dataValues.id
+//   res.json({guestCart, newItem})
+// } else {
+//   const guestCart = await Order.create({})
+//   req.session.order = {}
+//   req.session.order.id = guestCart.dataValues.id
 
-      //   const newItem = await OrderItem.create({
-      //     productId: req.body.productId,
-      //     orderId: guestCart.id
-      //   })
-      //   res.json({guestCart, newItem})
-    //-----------------------------------------------------------------------
-    // //Creates a cart for guests > method needs to be updated to find or create
+//   const newItem = await OrderItem.create({
+//     productId: req.body.productId,
+//     orderId: guestCart.id
+//   })
+//   res.json({guestCart, newItem})
+//-----------------------------------------------------------------------
+// //Creates a cart for guests > method needs to be updated to find or create
 
-    // // req.session = {}
+// // req.session = {}
 
-    // const guestCart = await Order.findOrCreate({
-    //   where: {id: req.session.order.id, isComplete: false},
-    //   include: [{model: Product}]
-    // })
+// const guestCart = await Order.findOrCreate({
+//   where: {id: req.session.order.id, isComplete: false},
+//   include: [{model: Product}]
+// })
 
-    // const newItem = await OrderItem.create({
-    //   productId: req.body.productId,
-    //   orderId: guestCart[0].id
-    // })
+// const newItem = await OrderItem.create({
+//   productId: req.body.productId,
+//   orderId: guestCart[0].id
+// })
 
-    // //This sets the order id just created to the order id on the session
-    // req.session.order.id = guestCart.dataValues.id
+// //This sets the order id just created to the order id on the session
+// req.session.order.id = guestCart.dataValues.id
 
-    // //Add OrderItem create() method here
+// //Add OrderItem create() method here
 
-    // res.json({guestCart, newItem})
-    //---------------------------------------------------------------------------------
+// res.json({guestCart, newItem})
+//---------------------------------------------------------------------------------
 
 // //----------------------------------------------------------------------------
 //  // req.session = {}
@@ -193,3 +178,38 @@ router.delete('/:id', async (req, res, next) => {
 //   })
 //   res.json({guestCart, newItem})
 // }
+
+// router.get('/', async (req, res, next) => {
+//   try {
+//     //Find an open cart for a logged in user
+//     if (req.user) {
+//       const userCart = await Order.findOne({
+//         where: {userId: req.user.id, isComplete: false},
+//         include: [{model: Product}]
+//       })
+//       //Send back cart data or a message that the cart is empty
+//       if (!userCart || userCart.products.length === 0) {
+//         res.send('Your Cart is Empty!')
+//       } else {
+//         res.json(userCart)
+//       }
+//     } else {
+//       // console.log(req.session.id, req.session)
+//       // Find an open cart for a guest
+//       const guestCart = await Order.findAll({
+//         // where: {id: req.session.order.id, isComplete: false},
+//         // include: [{model: Product}]
+//       })
+//       //Send back cart data or a message that the cart is empty
+//       res.json(guestCart)
+
+//       // if (!guestCart || guestCart.products.length === 0) {
+//       //   res.send('Your Cart is Empty!')
+//       // } else {
+//       //   res.json(guestCart)
+//       // }
+//     }
+//   } catch (err) {
+//     next(err)
+//   }
+// })

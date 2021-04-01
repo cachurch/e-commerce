@@ -32,7 +32,7 @@ OrderItem.prototype.checkOwnership = async function(user) {
       console.log('user.id ', user.id, 'order.userId ', order.userId)
       if (user.id === order.userId) {
         return true
-      } 
+      }
     }
     return false
   } catch (error) {
