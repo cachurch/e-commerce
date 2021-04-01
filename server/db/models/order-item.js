@@ -12,7 +12,7 @@ const OrderItem = db.define('orderItem', {
   //The amount of items in an order
   quantity: {
     type: Sequelize.INTEGER,
-    defaultValue: 0
+    defaultValue: 1
   },
   //the price for a single unit of that item
   productPrice: {
@@ -24,8 +24,24 @@ const OrderItem = db.define('orderItem', {
   }
 })
 
+OrderItem.prototype.checkOwnership = async function(user) {
+  try {
+    const order = await Order.findByPk(this.orderId)
+    console.log('order: ', order)
+    if (order) {
+      console.log('user.id ', user.id, 'order.userId ', order.userId)
+      if (user.id === order.userId) {
+        return true
+      } 
+    }
+    return false
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 //general idea?
-OrderItem.prototype.add = async function() {
+OrderItem.prototype.increment = async function() {
   try {
     this.quantity++
     this.totalPrice = this.quantity * this.productPrice
@@ -35,16 +51,12 @@ OrderItem.prototype.add = async function() {
   }
 }
 
-OrderItem.prototype.delete = async function() {
+OrderItem.prototype.decrement = async function() {
   try {
-    if (this.quantity >= 1) {
+    if (this.quantity > 1) {
       this.quantity--
       this.totalPrice = this.quantity * this.productPrice
-    } else {
-      this.quantity = 0
-      this.totalPrice = 0
     }
-
     await this.save()
   } catch (error) {
     console.error(error)

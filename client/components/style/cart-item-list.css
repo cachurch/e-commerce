@@ -1,0 +1,10 @@
+.cart-item-list {
+  display: flex;
+  align-items: left;
+  height: 200px;
+  margin: 15px;
+}
+
+.item-info {
+  margin: 15px;
+}

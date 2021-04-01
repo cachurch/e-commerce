@@ -55,12 +55,74 @@ router.post('/', async (req, res, next) => {
 
       const newItem = await OrderItem.create({
         productId: req.body.productId,
+        productPrice: req.body.productPrice,
         orderId: userCart[0].id
       })
 
       res.json({userCart, newItem})
     } else {
       res.status(304).send('Please Login!')
+
+    }
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.put('/increment/:id', async (req, res, next) => {
+  try {
+    if (req.user) req.user.id = 100
+    else req.user = {id: 100}
+    const item = await OrderItem.findByPk(req.params.id)
+    if (item) {
+      if (!await item.checkOwnership(req.user)) {
+        return res.sendStatus(403)
+      }
+      await item.increment()
+      res.send(item)
+    } else {
+      res.status(404).send('Item Not Found :(')
+    }
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.put('/decrement/:id', async (req, res, next) => {
+  try {
+    const item = await OrderItem.findByPk(req.params.id)
+    if (item) {
+      if (!await item.checkOwnership(req.user)) {
+        return res.sendStatus(403)
+      }
+      await item.decrement()
+      res.send(item)
+    } else {
+      res.status(404).send('Item Not Found :(')
+    }
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.delete('/:id', async (req, res, next) => {
+  try {
+    const item = await OrderItem.findByPk(req.params.id)
+    if (item) {
+      if (!await item.checkOwnership(req.user)) {
+        return res.sendStatus(403)
+      }
+      await item.destroy()
+      res.sendStatus(204)
+    } else {
+      res.sendStatus(404)
+    }
+  } catch (error) {
+    next(error)
+  }
+})
+
+
       // const hello = 'hi'
       // if (req.session.order) {
       //   const guestCart = await Order.findOne({
@@ -85,8 +147,6 @@ router.post('/', async (req, res, next) => {
       //     orderId: guestCart.id
       //   })
       //   res.json({guestCart, newItem})
-    }
-
     //-----------------------------------------------------------------------
     // //Creates a cart for guests > method needs to be updated to find or create
 
@@ -109,10 +169,6 @@ router.post('/', async (req, res, next) => {
 
     // res.json({guestCart, newItem})
     //---------------------------------------------------------------------------------
-  } catch (error) {
-    next(error)
-  }
-})
 
 // //----------------------------------------------------------------------------
 //  // req.session = {}

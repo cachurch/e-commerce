@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
-const OrderItem = require('./order-item')
+// const OrderItem = require('./order-item')
 
 const Order = db.define('order', {
   isComplete: {
