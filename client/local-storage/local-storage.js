@@ -20,7 +20,7 @@ function removeFromLocalStorage(product) {
   //add to local storage
   console.log('amogus')
   if (!localStorage.getItem('cart')) {
-    
+  // 
   } else {
     const cart = JSON.parse(localStorage.getItem('cart'))
     if (cart.items[product.id]) {

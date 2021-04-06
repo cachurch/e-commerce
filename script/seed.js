@@ -238,6 +238,7 @@ async function seed() {
     })
   ])
 
+
   console.log(`seeded ${users.length} users`)
   console.log(`seeded ${products.length} products`)
   console.log(`seeded ${orders.length} orders`)

@@ -4,11 +4,11 @@ const Order = require('./order')
 const Product = require('./product')
 
 const OrderItem = db.define('orderItem', {
-  id: {
-    type: Sequelize.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
-  },
+  // id: {
+  //   type: Sequelize.INTEGER,
+  //   primaryKey: true,
+  //   autoIncrement: true
+  // },
   //The amount of items in an order
   quantity: {
     type: Sequelize.INTEGER,

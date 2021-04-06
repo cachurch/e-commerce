@@ -6,6 +6,10 @@ module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
+    // For testing the user -----------------
+    // if (req.user) req.user.id = 1
+    // else req.user = {id: 1}
+    // ------------------------------------------
     //Find an open cart for a logged in user
     if (req.user) {
       const userCart = await Order.findOne({
@@ -39,12 +43,11 @@ router.post('/', async (req, res, next) => {
       })
 
       const newItem = await OrderItem.create({
-        productId: req.body.productId,
-        productPrice: req.body.productPrice,
+        productId: req.body.id,
+        productPrice: req.body.price,
         orderId: userCart[0].id
       })
-
-      res.json({userCart, newItem})
+      res.json({userCart: userCart[0].dataValues, newItem: newItem.dataValues})
     } else {
       res.status(304).send('Please Login!')
     }
@@ -55,8 +58,11 @@ router.post('/', async (req, res, next) => {
 
 router.put('/increment/:id', async (req, res, next) => {
   try {
-    if (req.user) req.user.id = 100
-    else req.user = {id: 100}
+    // For testing the user -----------------
+    // if (req.user) req.user.id = 1
+    // else req.user = {id: 1}
+    // -----------------------------------------
+
     const item = await OrderItem.findByPk(req.params.id)
     if (item) {
       if (!await item.checkOwnership(req.user)) {
@@ -105,7 +111,6 @@ router.delete('/:id', async (req, res, next) => {
     next(error)
   }
 })
-
 
 //Notes
 // const hello = 'hi'

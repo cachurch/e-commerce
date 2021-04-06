@@ -15,17 +15,19 @@ import {
   addToLocalStorage,
   removeFromLocalStorage
 } from '../local-storage/local-storage'
+import { fetchOrder, addOrderItem } from '../store'
 
 export class Cart extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      cart: getCartFromLS().items
+      // cart: getCartFromLS().items
     }
   }
 
   componentDidMount() {
     this.props.me()
+    this.props.fetchOrder()
   }
 
   //increase item in the cart
@@ -49,6 +51,10 @@ export class Cart extends React.Component {
   }
   render() {
     const user = this.props.user || {}
+    const order = this.props.order || {}
+    const orderItems = this.props.order.products || []
+    console.log('order', order)
+    console.log('orderItems', orderItems)
     //Pull in cart items from Local Storage & Change to an Array > Move this to the redux store
     const cartItems = getCartFromLS().items
     let items = []
@@ -59,7 +65,7 @@ export class Cart extends React.Component {
     return (
       <div>
         <h1>Cart</h1>
-        {items.map(item => {
+        {!user ? items.map(item => {
           return (
             <div className="cart-item-list" key={item.product.id}>
               <img src={item.product.imageUrl} />
@@ -92,6 +98,39 @@ export class Cart extends React.Component {
               </div>
             </div>
           )
+        }): orderItems.map(item => {
+          return (
+            <div className="cart-item-list" key={item.id}>
+              <img src={item.imageUrl} />
+              <div className="item-info">
+                <p>{item.artist}</p>
+              </div>
+              <div className="item-info">
+                <p>{item.title} </p>
+              </div>
+              <div className="item-info">
+                <p>${item.price}.00 </p>
+              </div>
+              <div className="item-info">
+                <button
+                  type="button"
+                  onClick={() => {
+                    this.increase(item, user)
+                  }}
+                >
+                  +
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    this.decrease(item, user)
+                  }}
+                >
+                  -
+                </button>
+              </div>
+            </div>
+          )
         })}
       </div>
     )
@@ -99,11 +138,13 @@ export class Cart extends React.Component {
 }
 
 const mapState = state => {
-  return {products: state.product.products, user: state.user}
+  return {user: state.user, order: state.cart}
 }
 
 const mapDispatch = dispatch => ({
-  me: () => dispatch(me())
+  me: () => dispatch(me()),
+  fetchOrder: () => dispatch(fetchOrder()),
+  addOrderItem: (item) => dispatch(addOrderItem(item))
 })
 
 export default connect(mapState, mapDispatch)(Cart)
