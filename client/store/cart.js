@@ -4,7 +4,7 @@ import axios from 'axios'
 const GOT_ORDER = 'GOT_ORDER'
 const ADDED_ORDER_ITEM = 'ADDED_ORDER_ITEM'
 const INCREMENTED_ORDER_ITEM = 'INCREMENTED_ORDER_ITEM'
-const DELETED_ORDER_ITEM = 'DELETED_ORDER_ITEM'
+const DECREMENTED_ORDER_ITEM = 'DECREMENTED_ORDER_ITEM'
 
 //ACTION TYPES
 const gotOrder = order => ({
@@ -22,10 +22,17 @@ const addedOrderItem = ({userCart, newItem}) => {
 }
 
 const incrementedOrderItem = (item) => {
-  console.log('STORE ITEM: ', item)
+  // console.log('STORE ITEM: ', item)
   return {
   type: INCREMENTED_ORDER_ITEM,
   item
+  }
+}
+
+const decrementedOrderItem = (item) => {
+  return {
+    type: DECREMENTED_ORDER_ITEM,
+    item
   }
 }
 
@@ -64,6 +71,16 @@ export const incrementOrderItem = (id) => async dispatch => {
   }
 }
 
+export const decrementOrderItem = (id) => async dispatch => {
+  try {
+    console.log('hit the decrement thunk!')
+    const {data} = await axios.put(`/api/cart/decrement/${id}`)
+    dispatch(decrementedOrderItem(data))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 //REDUCER
 
 export default function cart(state = initialState, action) {
@@ -72,9 +89,7 @@ export default function cart(state = initialState, action) {
       return action.order
    
     case ADDED_ORDER_ITEM:
-        // const cart = action.userCart
-        // const products = [...cart.products, action.newItem]
-        console.log('>>>>>>>>>>>', action.userCart)
+
       return {
           ...action.userCart, 
           products: [...action.userCart.products, action.newItem]
@@ -82,6 +97,7 @@ export default function cart(state = initialState, action) {
     case INCREMENTED_ORDER_ITEM: 
       return {
         ...state, products: [
+          //follow up: I feel like i don't totally get how spreading works why did I need to spread this?
           ...state.products.map(item => {
             if (item.id !== action.item.productId) {
               return item
@@ -94,6 +110,21 @@ export default function cart(state = initialState, action) {
             })
         ]
       }
+      case DECREMENTED_ORDER_ITEM:
+        return {
+          ...state, products: [
+            ...state.products.map(item => {
+              if (item.id !== action.item.productId) {
+                return item
+              } else {
+                return {
+                  ...item, orderItem: action.item
+                }
+              }
+
+            })
+          ]
+        }
       
       default:
         return state

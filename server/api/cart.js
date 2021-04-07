@@ -52,7 +52,7 @@ router.post('/', async (req, res, next) => {
         orderId: userCart[0].id
       })
 
-      //This updates the newItem 
+      //This adds product values to a new "orderItem" field on the newProduct object which is sent up. this ensures I have access to the correctly organized set of info to map over on the front end. 
       const newProduct = await Product.findByPk(req.body.id) 
       newProduct.dataValues.orderItem = newItem
 
@@ -79,9 +79,6 @@ router.put('/increment/:id', async (req, res, next) => {
         return res.sendStatus(403)
       }
       await item.increment()
-
-      // console.log('>>>> ITEM: ', item.dataValues)
-      //{item: item.dataValues}
       res.send(item)
     } else {
       res.status(404).send('Item Not Found :(')

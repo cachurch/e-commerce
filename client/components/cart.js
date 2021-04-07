@@ -15,7 +15,7 @@ import {
   addToLocalStorage,
   removeFromLocalStorage
 } from '../local-storage/local-storage'
-import { fetchOrder, addOrderItem, incrementOrderItem } from '../store'
+import { fetchOrder, addOrderItem, incrementOrderItem, decrementOrderItem } from '../store'
 
 export class Cart extends React.Component {
   constructor(props) {
@@ -127,7 +127,7 @@ export class Cart extends React.Component {
                 <button
                   type="button"
                   onClick={() => {
-                    this.decrease(item, user)
+                    this.props.decrementOrderItem(item.id)
                   }}
                 >
                   -
@@ -149,7 +149,8 @@ const mapDispatch = dispatch => ({
   me: () => dispatch(me()),
   fetchOrder: () => dispatch(fetchOrder()),
   addOrderItem: (item) => dispatch(addOrderItem(item)),
-  incrementOrderItem: (id) => dispatch(incrementOrderItem(id))
+  incrementOrderItem: (id) => dispatch(incrementOrderItem(id)),
+  decrementOrderItem: (id) => dispatch(decrementOrderItem(id))
 })
 
 export default connect(mapState, mapDispatch)(Cart)
