@@ -45,11 +45,11 @@ export class SingleProduct extends React.Component {
             <h3>{product.artist}</h3>
             <p>{product.title}</p>
             <p>${product.price}.00</p>
-            {/* {!user.id ? <button type="button" onClick={addToGuestCart}>
+            {!user.id ? <button type="button" onClick={addToGuestCart}>
               Add to Cart
-            </button> :  */}
+            </button> : 
             <button type="button" onClick={() => {this.props.addOrderItem(product)}}>*~*Add to Cart*~*</button> 
-            {/* } */}
+             } 
             {user.isAdmin ? (
               <EditProductForm
                 product={this.props.product}

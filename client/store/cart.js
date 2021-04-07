@@ -13,7 +13,7 @@ const gotOrder = order => ({
 })
 
 const addedOrderItem = ({userCart, newItem}) => {
-  console.log(userCart, newItem)
+  console.log('usercart: ', userCart, newItem)
   return {
   type: ADDED_ORDER_ITEM,
   userCart, 
@@ -21,10 +21,13 @@ const addedOrderItem = ({userCart, newItem}) => {
 }
 }
 
-const incrementedOrderItem = id => ({
+const incrementedOrderItem = (item) => {
+  console.log('STORE ITEM: ', item)
+  return {
   type: INCREMENTED_ORDER_ITEM,
-  id
-})
+  item
+  }
+}
 
 //INITIAL STATE
 const initialState = {}
@@ -32,9 +35,9 @@ const initialState = {}
 //THUNK CREATORS
 export const fetchOrder = () => async dispatch => {
   try {
+    // console.log('hit the fetch order thunk!')
     const {data} = await axios.get('/api/cart')
     dispatch(gotOrder(data))
-    console.log('hit the fetch order thunk!')
   } catch (error) {
     console.error(error)
   }
@@ -42,7 +45,7 @@ export const fetchOrder = () => async dispatch => {
 
 export const addOrderItem = (item) => async dispatch => {
   try {
-    console.log('hit the add order thunk!')
+    // console.log('hit the add order thunk!')
     const {data} = await axios.post('/api/cart', item)
     dispatch(addedOrderItem(data))
 
@@ -53,6 +56,7 @@ export const addOrderItem = (item) => async dispatch => {
 
 export const incrementOrderItem = (id) => async dispatch => {
   try {
+    console.log('hit the increment thunk!')
     const {data} = await axios.put(`/api/cart/increment/${id}`)
     dispatch(incrementedOrderItem(data))
   } catch (error) {
@@ -67,18 +71,33 @@ export default function cart(state = initialState, action) {
     case GOT_ORDER:
       return action.order
    
-      case ADDED_ORDER_ITEM:
+    case ADDED_ORDER_ITEM:
         // const cart = action.userCart
         // const products = [...cart.products, action.newItem]
-        return {
+        console.log('>>>>>>>>>>>', action.userCart)
+      return {
           ...action.userCart, 
           products: [...action.userCart.products, action.newItem]
         }
-      case INCREMENTED_ORDER_ITEM: 
+    case INCREMENTED_ORDER_ITEM: 
       return {
-        ...state, 
+        ...state, products: [
+          ...state.products.map(item => {
+            if (item.id !== action.item.productId) {
+              return item
+            } else {
+              return {
+                ...item, orderItem: action.item
+              }
+            }
+            
+            })
+        ]
       }
+      
       default:
         return state
   }
 }
+
+//the "id" on order items isn't included in the data sent because it isn't on the table? 

@@ -31,8 +31,8 @@ router.get('/', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   try {
     // For testing the user -----------------
-    if (req.user) req.user.id = 1
-    else req.user = {id: 1}
+    // if (req.user) req.user.id = 1
+    // else req.user = {id: 1}
     // -----------------------------------------
 
     //finds or creates open carts for users
@@ -41,13 +41,23 @@ router.post('/', async (req, res, next) => {
         where: {userId: req.user.id, isComplete: false},
         include: [{model: Product}]
       })
+      //This updates the instance of a newly created userCart to have an empty products array, to avoid a front end error
+      if (!userCart[0].products) {
+        userCart[0].dataValues.products = []
+      }
 
       const newItem = await OrderItem.create({
         productId: req.body.id,
         productPrice: req.body.price,
         orderId: userCart[0].id
       })
-      res.json({userCart: userCart[0].dataValues, newItem: newItem.dataValues})
+
+      //This updates the newItem 
+      const newProduct = await Product.findByPk(req.body.id) 
+      newProduct.dataValues.orderItem = newItem
+
+      res.json({userCart: userCart[0], newItem: newProduct})
+      // res.json({userCart: userCart[0].dataValues, newItem: newItem.dataValues})
     } else {
       res.status(304).send('Please Login!')
     }
@@ -69,6 +79,9 @@ router.put('/increment/:id', async (req, res, next) => {
         return res.sendStatus(403)
       }
       await item.increment()
+
+      // console.log('>>>> ITEM: ', item.dataValues)
+      //{item: item.dataValues}
       res.send(item)
     } else {
       res.status(404).send('Item Not Found :(')

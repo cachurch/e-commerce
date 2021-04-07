@@ -20,16 +20,15 @@ const OrderItem = db.define('orderItem', {
   },
   //the combined price for all items (single product)
   totalPrice: {
-    type: Sequelize.INTEGER
+    type: Sequelize.INTEGER,
+    defaultValue: this.productPrice
   }
 })
 
 OrderItem.prototype.checkOwnership = async function(user) {
   try {
     const order = await Order.findByPk(this.orderId)
-    console.log('order: ', order)
     if (order) {
-      console.log('user.id ', user.id, 'order.userId ', order.userId)
       if (user.id === order.userId) {
         return true
       }
@@ -40,7 +39,6 @@ OrderItem.prototype.checkOwnership = async function(user) {
   }
 }
 
-//general idea?
 OrderItem.prototype.increment = async function() {
   try {
     this.quantity++
@@ -62,5 +60,7 @@ OrderItem.prototype.decrement = async function() {
     console.error(error)
   }
 }
+
+//create beforeSave() hook to populate the default total price field as the price of one unit
 
 module.exports = OrderItem
