@@ -20,7 +20,7 @@ function removeFromLocalStorage(product) {
   //add to local storage
   console.log('amogus')
   if (!localStorage.getItem('cart')) {
-  // 
+    //
   } else {
     const cart = JSON.parse(localStorage.getItem('cart'))
     if (cart.items[product.id]) {
@@ -33,6 +33,17 @@ function removeFromLocalStorage(product) {
   }
 }
 
+function deleteFromLocalStorage(product) {
+  console.log('amogus delete')
+  if (!localStorage.getItem('cart')) {
+    //
+  } else {
+    const cart = JSON.parse(localStorage.getItem('cart'))
+    delete cart.items[product.id]
+    localStorage.setItem('cart', JSON.stringify(cart))
+  }
+}
+
 function getCartFromLS() {
   let cart = {items: {}, total: 0}
   if (localStorage.getItem('cart')) {
@@ -41,4 +52,9 @@ function getCartFromLS() {
   return cart
 }
 
-module.exports = {addToLocalStorage, getCartFromLS, removeFromLocalStorage}
+module.exports = {
+  addToLocalStorage,
+  getCartFromLS,
+  removeFromLocalStorage,
+  deleteFromLocalStorage
+}

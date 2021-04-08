@@ -11,6 +11,7 @@ import {me} from '../store/user'
 import './style/all-products.css'
 import Carousel from './hero-carousel'
 import ProductForm from './product-form'
+import {addOrderItem, incrementOrderItem, decrementOrderItem} from '../store'
 
 export class AllProducts extends React.Component {
   constructor(props) {
@@ -50,6 +51,30 @@ export class AllProducts extends React.Component {
                     Delete
                   </button>
                   <br />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      this.props.addOrderItem(product)
+                    }}
+                  >
+                    Add to Cart
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      this.props.incrementOrderItem(product.id)
+                    }}
+                  >
+                    +
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      this.props.decrementOrderItem(product.id)
+                    }}
+                  >
+                    -
+                  </button>
                 </div>
               ) : (
                 ''
@@ -79,7 +104,10 @@ const mapDispatch = dispatch => ({
   fetchProduct: id => dispatch(fetchProduct(id)),
   addProduct: newProduct => dispatch(addProduct(newProduct)),
   deleteProduct: id => dispatch(deleteProduct(id)),
-  me: () => dispatch(me())
+  me: () => dispatch(me()),
+  addOrderItem: item => dispatch(addOrderItem(item)),
+  incrementOrderItem: id => dispatch(incrementOrderItem(id)),
+  decrementOrderItem: id => dispatch(decrementOrderItem(id))
 })
 
 export default connect(mapState, mapDispatch)(AllProducts)

@@ -16,28 +16,28 @@ const gotOrder = order => ({
 const addedOrderItem = ({userCart, newItem}) => {
   console.log('usercart: ', userCart, newItem)
   return {
-  type: ADDED_ORDER_ITEM,
-  userCart, 
-  newItem
-}
-}
-
-const incrementedOrderItem = (item) => {
-  // console.log('STORE ITEM: ', item)
-  return {
-  type: INCREMENTED_ORDER_ITEM,
-  item
+    type: ADDED_ORDER_ITEM,
+    userCart,
+    newItem
   }
 }
 
-const decrementedOrderItem = (item) => {
+const incrementedOrderItem = item => {
+  // console.log('STORE ITEM: ', item)
+  return {
+    type: INCREMENTED_ORDER_ITEM,
+    item
+  }
+}
+
+const decrementedOrderItem = item => {
   return {
     type: DECREMENTED_ORDER_ITEM,
     item
   }
 }
 
-const deletedOrderItem = (id) => ({
+const deletedOrderItem = id => ({
   type: DELETED_ORDER_ITEM,
   id
 })
@@ -56,18 +56,17 @@ export const fetchOrder = () => async dispatch => {
   }
 }
 
-export const addOrderItem = (item) => async dispatch => {
+export const addOrderItem = item => async dispatch => {
   try {
     // console.log('hit the add order thunk!')
     const {data} = await axios.post('/api/cart', item)
     dispatch(addedOrderItem(data))
-
   } catch (error) {
     console.error(error)
   }
 }
 
-export const incrementOrderItem = (id) => async dispatch => {
+export const incrementOrderItem = id => async dispatch => {
   try {
     console.log('hit the increment thunk!')
     const {data} = await axios.put(`/api/cart/increment/${id}`)
@@ -77,7 +76,7 @@ export const incrementOrderItem = (id) => async dispatch => {
   }
 }
 
-export const decrementOrderItem = (id) => async dispatch => {
+export const decrementOrderItem = id => async dispatch => {
   try {
     console.log('hit the decrement thunk!')
     const {data} = await axios.put(`/api/cart/decrement/${id}`)
@@ -87,7 +86,7 @@ export const decrementOrderItem = (id) => async dispatch => {
   }
 }
 
-export const deleteOrderItem = (id) => async dispatch => {
+export const deleteOrderItem = id => async dispatch => {
   try {
     console.log('hit the delete thunk!')
     await axios.delete(`/api/cart/${id}`)
@@ -103,54 +102,51 @@ export default function cart(state = initialState, action) {
   switch (action.type) {
     case GOT_ORDER:
       return action.order
-   
-    case ADDED_ORDER_ITEM:
 
+    case ADDED_ORDER_ITEM:
       return {
-          ...action.userCart, 
-          products: [...action.userCart.products, action.newItem]
-        }
-    case INCREMENTED_ORDER_ITEM: 
+        ...action.userCart,
+        products: [...action.userCart.products, action.newItem]
+      }
+    case INCREMENTED_ORDER_ITEM:
       return {
-        ...state, products: [
+        ...state,
+        products: [
           //follow up: I feel like i don't totally get how spreading works why did I need to spread this?
           ...state.products.map(item => {
             if (item.id !== action.item.productId) {
               return item
             } else {
               return {
-                ...item, orderItem: action.item
+                ...item,
+                orderItem: action.item
               }
             }
-            
-            })
+          })
         ]
       }
-      case DECREMENTED_ORDER_ITEM:
-        return {
-          ...state, products: [
-            ...state.products.map(item => {
-              if (item.id !== action.item.productId) {
-                return item
-              } else {
-                return {
-                  ...item, orderItem: action.item
-                }
+    case DECREMENTED_ORDER_ITEM:
+      return {
+        ...state,
+        products: [
+          ...state.products.map(item => {
+            if (item.id !== action.item.productId) {
+              return item
+            } else {
+              return {
+                ...item,
+                orderItem: action.item
               }
-
-            })
-          ]
-        }
-      case DELETED_ORDER_ITEM:
-        return {
-          ...state, products: [
-            ...state.products.filter(item =>
-              item.id !== action.id)
-          ]
-        }
-      default:
-        return state
+            }
+          })
+        ]
+      }
+    case DELETED_ORDER_ITEM:
+      return {
+        ...state,
+        products: [...state.products.filter(item => item.id !== action.id)]
+      }
+    default:
+      return state
   }
 }
-
-//the "id" on order items isn't included in the data sent because it isn't on the table? 
