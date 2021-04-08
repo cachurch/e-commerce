@@ -5,6 +5,7 @@ const GOT_ORDER = 'GOT_ORDER'
 const ADDED_ORDER_ITEM = 'ADDED_ORDER_ITEM'
 const INCREMENTED_ORDER_ITEM = 'INCREMENTED_ORDER_ITEM'
 const DECREMENTED_ORDER_ITEM = 'DECREMENTED_ORDER_ITEM'
+const DELETED_ORDER_ITEM = 'DELETED_ORDER_ITEM'
 
 //ACTION TYPES
 const gotOrder = order => ({
@@ -35,6 +36,11 @@ const decrementedOrderItem = (item) => {
     item
   }
 }
+
+const deletedOrderItem = (id) => ({
+  type: DELETED_ORDER_ITEM,
+  id
+})
 
 //INITIAL STATE
 const initialState = {}
@@ -76,6 +82,16 @@ export const decrementOrderItem = (id) => async dispatch => {
     console.log('hit the decrement thunk!')
     const {data} = await axios.put(`/api/cart/decrement/${id}`)
     dispatch(decrementedOrderItem(data))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const deleteOrderItem = (id) => async dispatch => {
+  try {
+    console.log('hit the delete thunk!')
+    await axios.delete(`/api/cart/${id}`)
+    dispatch(deletedOrderItem(id))
   } catch (error) {
     console.error(error)
   }
@@ -125,7 +141,13 @@ export default function cart(state = initialState, action) {
             })
           ]
         }
-      
+      case DELETED_ORDER_ITEM:
+        return {
+          ...state, products: [
+            ...state.products.filter(item =>
+              item.id !== action.id)
+          ]
+        }
       default:
         return state
   }
