@@ -39,7 +39,7 @@ export class AllProducts extends React.Component {
               <Link to={`products/${product.id}`}>
                 <img src={product.imageUrl} className="product-img" />
               </Link>
-              {user.isAdmin ? (
+              {
                 <div>
                   <button type="submit">
                     <Link to={`products/${product.id}`}>Edit Artwork</Link>
@@ -54,7 +54,7 @@ export class AllProducts extends React.Component {
                   <button
                     type="button"
                     onClick={() => {
-                      this.props.addOrderItem(product)
+                      this.props.addOrderItem(product, user)
                     }}
                   >
                     Add to Cart
@@ -76,9 +76,7 @@ export class AllProducts extends React.Component {
                     -
                   </button>
                 </div>
-              ) : (
-                ''
-              )}
+              }
               <br />
             </div>
           ))}
@@ -105,7 +103,7 @@ const mapDispatch = dispatch => ({
   addProduct: newProduct => dispatch(addProduct(newProduct)),
   deleteProduct: id => dispatch(deleteProduct(id)),
   me: () => dispatch(me()),
-  addOrderItem: item => dispatch(addOrderItem(item)),
+  addOrderItem: (item, user) => dispatch(addOrderItem(item, user)),
   incrementOrderItem: id => dispatch(incrementOrderItem(id)),
   decrementOrderItem: id => dispatch(decrementOrderItem(id))
 })

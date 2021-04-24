@@ -1,4 +1,10 @@
 import axios from 'axios'
+import {
+  addToLocalStorage,
+  getCartFromLS,
+  removeFromLocalStorage,
+  deleteFromLocalStorage
+} from '../local-storage/index'
 
 //ACTION CREATORS
 const GOT_ORDER = 'GOT_ORDER'
@@ -46,21 +52,29 @@ const deletedOrderItem = id => ({
 const initialState = {}
 
 //THUNK CREATORS
-export const fetchOrder = () => async dispatch => {
+export const fetchOrder = user => async dispatch => {
   try {
     // console.log('hit the fetch order thunk!')
-    const {data} = await axios.get('/api/cart')
-    dispatch(gotOrder(data))
+    if (user.id) {
+      const {data} = await axios.get('/api/cart')
+      dispatch(gotOrder(data))
+    } else {
+      dispatch(gotOrder(getCartFromLS()))
+    }
   } catch (error) {
     console.error(error)
   }
 }
 
-export const addOrderItem = item => async dispatch => {
+export const addOrderItem = (item, user) => async dispatch => {
   try {
-    // console.log('hit the add order thunk!')
-    const {data} = await axios.post('/api/cart', item)
-    dispatch(addedOrderItem(data))
+    if (user.id) {
+      // console.log('hit the add order thunk!')
+      const {data} = await axios.post('/api/cart', item)
+      dispatch(addedOrderItem(data))
+    } else {
+      dispatch(addedOrderItem(addToLocalStorage(item)))
+    }
   } catch (error) {
     console.error(error)
   }

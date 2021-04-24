@@ -5,7 +5,7 @@ import {fetchProduct} from '../store/product'
 import {me} from '../store/user'
 import EditProductForm from './edit-product-form'
 import './style/single-product.css'
-import {addToLocalStorage} from '../local-storage/local-storage'
+import {addToLocalStorage} from '../local-storage/index'
 import {fetchOrder, addOrderItem} from '../store'
 
 export class SingleProduct extends React.Component {
@@ -44,20 +44,16 @@ export class SingleProduct extends React.Component {
             <h3>{product.artist}</h3>
             <p>{product.title}</p>
             <p>${product.price}.00</p>
-            {!user.id ? (
-              <button type="button" onClick={addToGuestCart}>
-                Add to Cart
-              </button>
-            ) : (
+            {
               <button
                 type="button"
                 onClick={() => {
-                  this.props.addOrderItem(product)
+                  this.props.addOrderItem(product, user)
                 }}
               >
                 Add to Cart
               </button>
-            )}
+            }
             {user.isAdmin ? (
               <EditProductForm
                 product={this.props.product}
@@ -82,7 +78,7 @@ const mapDispatch = dispatch => ({
   fetchProduct: id => dispatch(fetchProduct(id)),
   me: () => dispatch(me()),
   fetchOrder: () => dispatch(fetchOrder()),
-  addOrderItem: item => dispatch(addOrderItem(item))
+  addOrderItem: (item, user) => dispatch(addOrderItem(item, user))
 })
 
 export default connect(mapState, mapDispatch)(SingleProduct)

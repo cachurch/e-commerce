@@ -7,7 +7,8 @@ import './style/cart-item-list.css'
 import {
   getCartFromLS,
   addToLocalStorage,
-  removeFromLocalStorage
+  removeFromLocalStorage,
+  deleteFromLocalStorage
 } from '../local-storage/local-storage'
 import {
   fetchOrder,
@@ -49,6 +50,12 @@ export class Cart extends React.Component {
       this.setState({cart: getCartFromLS().items})
     }
   }
+
+  delete(product) {
+    deleteFromLocalStorage(product)
+    this.setState({cart: getCartFromLS().items})
+  }
+
   render() {
     const user = this.props.user || {}
     const order = this.props.order || {}
@@ -67,7 +74,7 @@ export class Cart extends React.Component {
     return (
       <div>
         <h1>Cart</h1>
-        {!user
+        {!user.id
           ? items.map(item => {
               return (
                 <div className="cart-item-list" key={item.product.id}>
@@ -77,6 +84,9 @@ export class Cart extends React.Component {
                   </div>
                   <div className="item-info">
                     <p>{item.product.title} </p>
+                  </div>
+                  <div className="item-info">
+                    <p>Qty: {item.quantity} </p>
                   </div>
                   <div className="item-info">
                     <p>${item.product.price}.00 </p>
@@ -97,6 +107,14 @@ export class Cart extends React.Component {
                       }}
                     >
                       -
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        this.delete(item.product)
+                      }}
+                    >
+                      DELETE
                     </button>
                   </div>
                 </div>
