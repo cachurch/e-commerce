@@ -27,6 +27,7 @@ export class AllProducts extends React.Component {
   render() {
     const products = this.props.products || []
     const user = this.props.user || {}
+    const item = this.props.products || []
 
     return (
       <div>
@@ -62,7 +63,7 @@ export class AllProducts extends React.Component {
                   <button
                     type="button"
                     onClick={() => {
-                      this.props.incrementOrderItem(product.id)
+                      this.props.incrementOrderItem(product.id, user, item)
                     }}
                   >
                     +
@@ -104,7 +105,8 @@ const mapDispatch = dispatch => ({
   deleteProduct: id => dispatch(deleteProduct(id)),
   me: () => dispatch(me()),
   addOrderItem: (item, user) => dispatch(addOrderItem(item, user)),
-  incrementOrderItem: id => dispatch(incrementOrderItem(id)),
+  incrementOrderItem: (id, user, item) =>
+    dispatch(incrementOrderItem(id, user, item)),
   decrementOrderItem: id => dispatch(decrementOrderItem(id))
 })
 

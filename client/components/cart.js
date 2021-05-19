@@ -142,7 +142,7 @@ export class Cart extends React.Component {
                 <button
                   type="button"
                   onClick={() => {
-                    this.props.incrementOrderItem(item.id)
+                    this.props.incrementOrderItem(item.id, user, item)
                   }}
                 >
                   +
@@ -180,7 +180,8 @@ const mapDispatch = dispatch => ({
   me: () => dispatch(me()),
   fetchOrder: user => dispatch(fetchOrder(user)),
   addOrderItem: (item, user) => dispatch(addOrderItem(item, user)),
-  incrementOrderItem: id => dispatch(incrementOrderItem(id)),
+  incrementOrderItem: (id, user, item) =>
+    dispatch(incrementOrderItem(id, user, item)),
   decrementOrderItem: id => dispatch(decrementOrderItem(id)),
   deleteOrderItem: id => dispatch(deleteOrderItem(id))
 })

@@ -29,7 +29,7 @@ const addedOrderItem = ({userCart, newItem}) => {
 }
 
 const incrementedOrderItem = item => {
-  // console.log('STORE ITEM: ', item)
+  console.log('store item: ', item)
   return {
     type: INCREMENTED_ORDER_ITEM,
     item
@@ -69,10 +69,11 @@ export const fetchOrder = user => async dispatch => {
 export const addOrderItem = (item, user) => async dispatch => {
   try {
     if (user.id) {
-      // console.log('hit the add order thunk!')
+      console.log('hit the add order thunk!')
       const {data} = await axios.post('/api/cart', item)
       dispatch(addedOrderItem(data))
     } else {
+      console.log('hit the add order thunk!')
       dispatch(addedOrderItem(addToLocalStorage(item)))
     }
   } catch (error) {
@@ -80,11 +81,15 @@ export const addOrderItem = (item, user) => async dispatch => {
   }
 }
 
-export const incrementOrderItem = id => async dispatch => {
+export const incrementOrderItem = (id, user, item) => async dispatch => {
   try {
-    console.log('hit the increment thunk!')
-    const {data} = await axios.put(`/api/cart/increment/${id}`)
-    dispatch(incrementedOrderItem(data))
+    if (user.id) {
+      console.log('hit the increment thunk!')
+      const {data} = await axios.put(`/api/cart/increment/${id}`)
+      dispatch(incrementedOrderItem(data))
+    } else {
+      dispatch(incrementedOrderItem(addToLocalStorage(item)))
+    }
   } catch (error) {
     console.error(error)
   }
@@ -126,7 +131,6 @@ export default function cart(state = initialState, action) {
       return {
         ...state,
         products: [
-          //follow up: I feel like i don't totally get how spreading works why did I need to spread this?
           ...state.products.map(item => {
             if (item.id !== action.item.productId) {
               return item
