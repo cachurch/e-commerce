@@ -53,12 +53,15 @@ function removeFromLocalStorage(product) {
 }
 function deleteFromLocalStorage(product) {
   console.log('hit the delete from local storage function')
+
   if (!localStorage.getItem('cart')) {
     //
   } else {
     const cart = JSON.parse(localStorage.getItem('cart'))
     delete cart.items[product.id]
     localStorage.setItem('cart', JSON.stringify(cart))
+
+    return product.id
   }
 }
 

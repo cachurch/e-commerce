@@ -158,7 +158,7 @@ export class Cart extends React.Component {
                 <button
                   type="button"
                   onClick={() => {
-                    this.props.deleteOrderItem(item.id)
+                    this.props.deleteOrderItem(item.id, user, item)
                   }}
                 >
                   DELETE
@@ -184,7 +184,7 @@ const mapDispatch = dispatch => ({
     dispatch(incrementOrderItem(id, user, item)),
   decrementOrderItem: (id, user, item) =>
     dispatch(decrementOrderItem(id, user, item)),
-  deleteOrderItem: id => dispatch(deleteOrderItem(id))
+  deleteOrderItem: (id, user, item) => dispatch(deleteOrderItem(id, user, item))
 })
 
 export default connect(mapState, mapDispatch)(Cart)

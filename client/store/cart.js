@@ -6,14 +6,14 @@ import {
   deleteFromLocalStorage
 } from '../local-storage/index'
 
-//ACTION CREATORS
+//ACTION TYPES
 const GOT_ORDER = 'GOT_ORDER'
 const ADDED_ORDER_ITEM = 'ADDED_ORDER_ITEM'
 const INCREMENTED_ORDER_ITEM = 'INCREMENTED_ORDER_ITEM'
 const DECREMENTED_ORDER_ITEM = 'DECREMENTED_ORDER_ITEM'
 const DELETED_ORDER_ITEM = 'DELETED_ORDER_ITEM'
 
-//ACTION Creator - used to update state, goes to reducer to update via the dispatch (sending an obj)
+//ACTION Creators - used to update state, goes to reducer to update via the dispatch (sending an obj)
 const gotOrder = order => ({
   type: GOT_ORDER,
   order
@@ -45,10 +45,13 @@ const decrementedOrderItem = item => {
   }
 }
 
-const deletedOrderItem = id => ({
-  type: DELETED_ORDER_ITEM,
-  id
-})
+const deletedOrderItem = id => {
+  console.log('action creator id:', id)
+  return {
+    type: DELETED_ORDER_ITEM,
+    id
+  }
+}
 
 //INITIAL STATE
 const initialState = {}
@@ -113,11 +116,16 @@ export const decrementOrderItem = (id, user, item) => async dispatch => {
   }
 }
 
-export const deleteOrderItem = id => async dispatch => {
+export const deleteOrderItem = (id, user, item) => async dispatch => {
   try {
-    console.log('hit the delete thunk!')
-    await axios.delete(`/api/cart/${id}`)
-    dispatch(deletedOrderItem(id))
+    if (user.id) {
+      console.log('hit the delete thunk!')
+      await axios.delete(`/api/cart/${id}`)
+      dispatch(deletedOrderItem(id))
+    } else {
+      console.log('hit the delete thunk!')
+      dispatch(deletedOrderItem(deleteFromLocalStorage(item)))
+    }
   } catch (error) {
     console.error(error)
   }
