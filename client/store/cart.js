@@ -13,7 +13,7 @@ const INCREMENTED_ORDER_ITEM = 'INCREMENTED_ORDER_ITEM'
 const DECREMENTED_ORDER_ITEM = 'DECREMENTED_ORDER_ITEM'
 const DELETED_ORDER_ITEM = 'DELETED_ORDER_ITEM'
 
-//ACTION TYPES
+//ACTION Creator - used to update state, goes to reducer to update via the dispatch (sending an obj)
 const gotOrder = order => ({
   type: GOT_ORDER,
   order
@@ -37,6 +37,8 @@ const incrementedOrderItem = item => {
 }
 
 const decrementedOrderItem = item => {
+  console.log('action creator item: ', item)
+
   return {
     type: DECREMENTED_ORDER_ITEM,
     item
@@ -54,7 +56,7 @@ const initialState = {}
 //THUNK CREATORS
 export const fetchOrder = user => async dispatch => {
   try {
-    // console.log('hit the fetch order thunk!')
+    console.log('hit the fetch order thunk!')
     if (user.id) {
       const {data} = await axios.get('/api/cart')
       dispatch(gotOrder(data))
@@ -95,11 +97,17 @@ export const incrementOrderItem = (id, user, item) => async dispatch => {
   }
 }
 
-export const decrementOrderItem = id => async dispatch => {
+export const decrementOrderItem = (id, user, item) => async dispatch => {
   try {
-    console.log('hit the decrement thunk!')
-    const {data} = await axios.put(`/api/cart/decrement/${id}`)
-    dispatch(decrementedOrderItem(data))
+    if (user.id) {
+      console.log('hit the decrement thunk!')
+      const {data} = await axios.put(`/api/cart/decrement/${id}`)
+      dispatch(decrementedOrderItem(data))
+    } else {
+      console.log('hit the decrement thunk!')
+      console.log('thunk: item', item)
+      dispatch(decrementedOrderItem(removeFromLocalStorage(item)))
+    }
   } catch (error) {
     console.error(error)
   }

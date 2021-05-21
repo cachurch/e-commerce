@@ -61,7 +61,7 @@ export class Cart extends React.Component {
     const order = this.props.order.products || []
     // const orderItems = this.props.order.products || []
 
-    console.log('order', order)
+    console.log('react component order', order)
     // console.log('orderItems', orderItems)
     // console.log('hi i rendered')
     //Pull in cart items from Local Storage & Change to an Array > Move this to the redux store
@@ -150,7 +150,7 @@ export class Cart extends React.Component {
                 <button
                   type="button"
                   onClick={() => {
-                    this.props.decrementOrderItem(item.id)
+                    this.props.decrementOrderItem(item.id, user, item)
                   }}
                 >
                   -
@@ -182,7 +182,8 @@ const mapDispatch = dispatch => ({
   addOrderItem: (item, user) => dispatch(addOrderItem(item, user)),
   incrementOrderItem: (id, user, item) =>
     dispatch(incrementOrderItem(id, user, item)),
-  decrementOrderItem: id => dispatch(decrementOrderItem(id)),
+  decrementOrderItem: (id, user, item) =>
+    dispatch(decrementOrderItem(id, user, item)),
   deleteOrderItem: id => dispatch(deleteOrderItem(id))
 })
 
