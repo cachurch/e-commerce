@@ -238,10 +238,34 @@ async function seed() {
     })
   ])
 
+  // const orderItems = await Promise.all([
+  //   OrderItem.create({
+  //     quantity: 1,
+  //     productPrice: 35000,
+  //     totalPrice: 35000,
+  //     productId: 1,
+  //     orderId: 1
+  //   }),
+  //   OrderItem.create({
+  //     quantity: 1,
+  //     productPrice: 35000,
+  //     totalPrice: 35000,
+  //     productId: 2,
+  //     orderId: 1
+  //   }),
+  //   OrderItem.create({
+  //     quantity: 1,
+  //     productPrice: 35000,
+  //     totalPrice: 35000,
+  //     productId: 3,
+  //     orderId: 1
+  //   })
+  // ])
 
   console.log(`seeded ${users.length} users`)
   console.log(`seeded ${products.length} products`)
   console.log(`seeded ${orders.length} orders`)
+  // console.log(`seeded ${orderItems.length} orders`)
   console.log(`seeded successfully`)
 }
 

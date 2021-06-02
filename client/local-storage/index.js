@@ -1,5 +1,3 @@
-//Add to thunk, (transform data for fetch cart here to be the same as in database), add user as an argument in the thunk, you have access to user at the highest level in redux.
-
 const {default: product} = require('../store/product')
 
 function addToLocalStorage(product) {
@@ -14,10 +12,7 @@ function addToLocalStorage(product) {
     userCart = {}
   } else {
     cart = JSON.parse(localStorage.getItem('cart'))
-    // const products = []
-    // for (let key in cart.items) {
-    //   products.push({...cart.items[key], productId: key})
-    // }
+
     const products = formatProducts(cart)
     userCart = {products}
 
@@ -77,42 +72,10 @@ function deleteCart() {
   }
 }
 
-// function getCartFromLS() {
-//   let cart = {items: {}, total: 0}
-//   let items = []
-//   let final = []
-
-//   if (localStorage.getItem('cart')) {
-//     cart = JSON.parse(localStorage.getItem('cart'))
-//     // eslint-disable-next-line guard-for-in
-//     for (let key in cart) {
-//         items.push(Object.values(cart[key]))
-//       }
-//     for (let i = 0; i < items.length; i++) {
-//         for(let j = 0; j < items[i].length; j++) {
-//         items[i][j].product.orderItem = {quantity: items[i][j].quantity, productId: items[i][j].id}
-//         final.push(items[i][j].product)
-//             }
-//       }
-
-//   }
-//   return {products: final}
-// }
 function getCartFromLS() {
   let cart = {items: {}, total: 0}
-  let final = []
   if (localStorage.getItem('cart')) {
     cart = JSON.parse(localStorage.getItem('cart'))
-    // let items = cart.items
-    // eslint-disable-next-line guard-for-in
-    //   for (let key in items) {
-    //     items[key].product.orderItem = {
-    //       quantity: items[key].quantity,
-    //       productId: items[key].product.id
-    //     }
-    //     final.push(items[key].product)
-    //   }
-    // }
   }
   const products = formatProducts(cart)
   return {products}
@@ -139,3 +102,30 @@ module.exports = {
   deleteFromLocalStorage,
   deleteCart
 }
+
+// function getCartFromLS() {
+//   let cart = {items: {}, total: 0}
+//   let items = []
+//   let final = []
+
+//   if (localStorage.getItem('cart')) {
+//     cart = JSON.parse(localStorage.getItem('cart'))
+//     // eslint-disable-next-line guard-for-in
+//     for (let key in cart) {
+//         items.push(Object.values(cart[key]))
+//       }
+//     for (let i = 0; i < items.length; i++) {
+//         for(let j = 0; j < items[i].length; j++) {
+//         items[i][j].product.orderItem = {quantity: items[i][j].quantity, productId: items[i][j].id}
+//         final.push(items[i][j].product)
+//             }
+//       }
+
+//   }
+//   return {products: final}
+// }
+
+//  {order.forEach(item => {
+//   total += item.price
+// })}
+// Total Price: ${total}.00

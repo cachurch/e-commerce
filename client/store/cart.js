@@ -11,6 +11,7 @@ const GOT_ORDER = 'GOT_ORDER'
 const ADDED_ORDER_ITEM = 'ADDED_ORDER_ITEM'
 const INCREMENTED_ORDER_ITEM = 'INCREMENTED_ORDER_ITEM'
 const DECREMENTED_ORDER_ITEM = 'DECREMENTED_ORDER_ITEM'
+const CHECKEDOUT = 'CHECKEDOUT'
 const DELETED_ORDER_ITEM = 'DELETED_ORDER_ITEM'
 
 //ACTION Creators - used to update state, goes to reducer to update via the dispatch (sending an obj)
@@ -45,6 +46,14 @@ const decrementedOrderItem = item => {
   }
 }
 
+const checkedOutOrder = order => {
+  console.log('store: order', order)
+  return {
+    type: CHECKEDOUT,
+    order
+  }
+}
+
 const deletedOrderItem = id => {
   console.log('action creator id:', id)
   return {
@@ -57,23 +66,27 @@ const deletedOrderItem = id => {
 const initialState = {}
 
 //THUNK CREATORS
-export const fetchOrder = user => async dispatch => {
+export const fetchOrder = () => async dispatch => {
   try {
     console.log('hit the fetch order thunk!')
-    if (user.id) {
+    const user = await axios.get('/auth/me')
+    if (user.data.id) {
       const {data} = await axios.get('/api/cart')
+      // console.log('this data is from the backend')
       dispatch(gotOrder(data))
     } else {
       dispatch(gotOrder(getCartFromLS()))
+      // console.log('this data is from the browser')
     }
   } catch (error) {
     console.error(error)
   }
 }
 
-export const addOrderItem = (item, user) => async dispatch => {
+export const addOrderItem = item => async dispatch => {
   try {
-    if (user.id) {
+    const user = await axios.get('/auth/me')
+    if (user.data.id) {
       console.log('hit the add order thunk!')
       const {data} = await axios.post('/api/cart', item)
       dispatch(addedOrderItem(data))
@@ -86,13 +99,16 @@ export const addOrderItem = (item, user) => async dispatch => {
   }
 }
 
-export const incrementOrderItem = (id, user, item) => async dispatch => {
+export const incrementOrderItem = (id, item) => async dispatch => {
   try {
-    if (user.id) {
+    const user = await axios.get('/auth/me')
+    console.log('THUNK: user.data.id', user)
+    if (user.data.id) {
       console.log('hit the increment thunk!')
       const {data} = await axios.put(`/api/cart/increment/${id}`)
       dispatch(incrementedOrderItem(data))
     } else {
+      console.log('hit the increment thunk!')
       dispatch(incrementedOrderItem(addToLocalStorage(item)))
     }
   } catch (error) {
@@ -100,9 +116,10 @@ export const incrementOrderItem = (id, user, item) => async dispatch => {
   }
 }
 
-export const decrementOrderItem = (id, user, item) => async dispatch => {
+export const decrementOrderItem = (id, item) => async dispatch => {
   try {
-    if (user.id) {
+    const user = await axios.get('/auth/me')
+    if (user.data.id) {
       console.log('hit the decrement thunk!')
       const {data} = await axios.put(`/api/cart/decrement/${id}`)
       dispatch(decrementedOrderItem(data))
@@ -116,9 +133,29 @@ export const decrementOrderItem = (id, user, item) => async dispatch => {
   }
 }
 
-export const deleteOrderItem = (id, user, item) => async dispatch => {
+export const checkoutOrder = id => async dispatch => {
   try {
-    if (user.id) {
+    console.log('id', id)
+    const user = await axios.get('/auth/me')
+    console.log('user', user)
+    if (user.data.id) {
+      console.log('checked out!')
+      const {data} = await axios.put(`/api/cart/checkout/${id}`)
+      dispatch(checkedOutOrder(data))
+    } else {
+      console.log('checkout guest user!')
+      // console.log('thunk: item', item)
+      // dispatch(decrementedOrderItem(removeFromLocalStorage(item)))
+    }
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const deleteOrderItem = (id, item) => async dispatch => {
+  try {
+    const user = await axios.get('/auth/me')
+    if (user.data.id) {
       console.log('hit the delete thunk!')
       await axios.delete(`/api/cart/${id}`)
       dispatch(deletedOrderItem(id))
@@ -175,6 +212,8 @@ export default function cart(state = initialState, action) {
           })
         ]
       }
+    case CHECKEDOUT:
+      return action.order
     case DELETED_ORDER_ITEM:
       return {
         ...state,

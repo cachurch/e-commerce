@@ -52,8 +52,8 @@ router.post('/', async (req, res, next) => {
         orderId: userCart[0].id
       })
 
-      //This adds product values to a new "orderItem" field on the newProduct object which is sent up. this ensures I have access to the correctly organized set of info to map over on the front end. 
-      const newProduct = await Product.findByPk(req.body.id) 
+      //This adds product values to a new "orderItem" field on the newProduct object which is sent up to the frontend. this ensures I have access to the correctly organized set of info to map over on the front end.
+      const newProduct = await Product.findByPk(req.body.id)
       newProduct.dataValues.orderItem = newItem
 
       res.json({userCart: userCart[0], newItem: newProduct})
@@ -91,6 +91,8 @@ router.put('/increment/:id', async (req, res, next) => {
 router.put('/decrement/:id', async (req, res, next) => {
   try {
     const item = await OrderItem.findByPk(req.params.id)
+    // console.log('item >>>>', item)
+    // console.log('user >>>>', req.user)
     if (item) {
       if (!await item.checkOwnership(req.user)) {
         return res.sendStatus(403)
@@ -100,6 +102,17 @@ router.put('/decrement/:id', async (req, res, next) => {
     } else {
       res.status(404).send('Item Not Found :(')
     }
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.put('/checkout/:id', async (req, res, next) => {
+  try {
+    const checkedOut = await Order.findByPk(req.params.id)
+    checkedOut.dataValues.isComplete = true
+    await checkedOut.save()
+    res.send(checkedOut)
   } catch (error) {
     next(error)
   }

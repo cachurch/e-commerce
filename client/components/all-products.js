@@ -55,7 +55,7 @@ export class AllProducts extends React.Component {
                   <button
                     type="button"
                     onClick={() => {
-                      this.props.addOrderItem(product, user)
+                      this.props.addOrderItem(product)
                     }}
                   >
                     Add to Cart
@@ -104,7 +104,7 @@ const mapDispatch = dispatch => ({
   addProduct: newProduct => dispatch(addProduct(newProduct)),
   deleteProduct: id => dispatch(deleteProduct(id)),
   me: () => dispatch(me()),
-  addOrderItem: (item, user) => dispatch(addOrderItem(item, user)),
+  addOrderItem: item => dispatch(addOrderItem(item)),
   incrementOrderItem: (id, user, item) =>
     dispatch(incrementOrderItem(id, user, item)),
   decrementOrderItem: id => dispatch(decrementOrderItem(id))
