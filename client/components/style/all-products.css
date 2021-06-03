@@ -22,3 +22,7 @@
   height: 250px;
   object-fit: cover;
 }
+
+.addToCartButton {
+  padding: 20px;
+}

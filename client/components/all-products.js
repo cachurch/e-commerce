@@ -40,7 +40,7 @@ export class AllProducts extends React.Component {
               <Link to={`products/${product.id}`}>
                 <img src={product.imageUrl} className="product-img" />
               </Link>
-              {
+              {user.isAdmin ? (
                 <div>
                   <button type="submit">
                     <Link to={`products/${product.id}`}>Edit Artwork</Link>
@@ -77,7 +77,34 @@ export class AllProducts extends React.Component {
                     -
                   </button>
                 </div>
-              }
+              ) : (
+                <div className="addToCartButtons">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      this.props.addOrderItem(product)
+                    }}
+                  >
+                    Add to Cart
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      this.props.incrementOrderItem(product.id, user, item)
+                    }}
+                  >
+                    +
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      this.props.decrementOrderItem(product.id)
+                    }}
+                  >
+                    -
+                  </button>
+                </div>
+              )}
               <br />
             </div>
           ))}
