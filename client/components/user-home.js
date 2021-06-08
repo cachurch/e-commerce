@@ -21,7 +21,9 @@ export const UserHome = props => {
               <h4>View Users</h4>
             </li>
             <li>
-              <h4>Edit Products</h4>
+              <h4>
+                <Link to="/products">Edit Products</Link>
+              </h4>
             </li>
             <li>
               <h4>View Your Orders</h4>

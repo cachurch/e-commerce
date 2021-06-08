@@ -110,13 +110,23 @@ router.put('/decrement/:id', async (req, res, next) => {
 router.put('/checkout/:id', async (req, res, next) => {
   try {
     const checkedOut = await Order.findByPk(req.params.id)
-    checkedOut.dataValues.isComplete = true
+    checkedOut.update({isComplete: true})
     await checkedOut.save()
     res.send(checkedOut)
   } catch (error) {
     next(error)
   }
 })
+// router.put('/checkout/:id', async (req, res, next) => {
+//   try {
+//     const checkedOut = await Order.findByPk(req.params.id)
+//     checkedOut.dataValues.isComplete = true
+//     await checkedOut.save()
+//     res.send(checkedOut)
+//   } catch (error) {
+//     next(error)
+//   }
+// })
 
 router.delete('/:id', async (req, res, next) => {
   try {
