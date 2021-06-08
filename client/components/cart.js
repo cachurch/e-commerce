@@ -91,6 +91,7 @@ export class Cart extends React.Component {
         >
           CHECKOUT
         </button>
+        {this.props.order.isComplete ? 'Thank You for Your Order!' : ''}
       </div>
     )
   }
