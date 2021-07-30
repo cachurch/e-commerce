@@ -96,6 +96,7 @@ const createApp = () => {
 
 const startListening = () => {
   // start listening (and create a 'server' object representing our server)
+  console.log('STARTLISTENING')
   const server = app.listen(PORT, () =>
     console.log(`Mixing it up on port ${PORT}`)
   )
@@ -119,6 +120,7 @@ async function bootApp() {
 // if we wanted to require our app in a test spec
 if (require.main === module) {
   bootApp()
+  console.log('WORKING')
 } else {
   createApp()
 }
