@@ -49,7 +49,7 @@ export default class SimpleSlider extends Component {
           </div>
           <div>
             <img
-              src="https://www.glenstone.org/wp-content/uploads/prod/2018/08/SERRr_GF_ToLift-731x548.jpg"
+              src="https://whitneymedia.org/assets/artwork/16291/193376.jpeg"
               className="carousel-slide"
             />
             <h3 />
