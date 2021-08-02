@@ -105,7 +105,7 @@ async function seed() {
       artist: 'Richard Serra',
       title: 'To Lift',
       // imageUrl:
-      // 'https: 
+      // 'https:
       //
       price: 350000
     }),
@@ -208,7 +208,7 @@ async function seed() {
       artist: 'Clyfford Still',
       title: 'PH-123',
       imageUrl: 'https://whitneymedia.org/assets/artwork/16291/193376.jpeg',
-      price: 350000
+      price: 450000
     }),
     Product.create({
       artist: 'Clyfford Still',
