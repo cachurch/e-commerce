@@ -83,14 +83,19 @@ export class Cart extends React.Component {
             </div>
           )
         })}
-        <button
-          type="button"
-          onClick={() => {
-            this.props.checkoutOrder(orderId)
-          }}
-        >
-          CHECKOUT
-        </button>
+
+        {this.props.order.isComplete ? (
+          'Thank You for Your Order!'
+        ) : (
+          <button
+            type="button"
+            onClick={() => {
+              this.props.checkoutOrder(orderId)
+            }}
+          >
+            CHECKOUT
+          </button>
+        )}
       </div>
     )
   }
