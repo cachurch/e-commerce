@@ -106,15 +106,15 @@ async function seed() {
     Product.create({
       artist: 'Richard Serra',
       title: 'To Lift',
-      imageUrl:
-        'https://www.glenstone.org/wp-content/uploads/prod/2018/08/SERRr_GF_ToLift-731x548.jpg',
+      // imageUrl:
+      // 'https://www.glenstone.org/wp-content/uploads/prod/2018/08/SERRr_GF_ToLift-731x548.jpg',
       price: 350000
     }),
     Product.create({
       artist: 'Richard Serra',
       title: 'To Lift',
-      imageUrl:
-        'https://www.glenstone.org/wp-content/uploads/prod/2018/07/SERRr_GF_Contour290_01-731x548.jpg',
+      // imageUrl:
+      //   'https://www.glenstone.org/wp-content/uploads/prod/2018/07/SERRr_GF_Contour290_01-731x548.jpg',
       price: 350000
     }),
     Product.create({
