@@ -3,8 +3,6 @@
 const db = require('../server/db')
 const {User, Product, Order} = require('../server/db/models')
 
-console.log(db)
-
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
@@ -107,7 +105,8 @@ async function seed() {
       artist: 'Richard Serra',
       title: 'To Lift',
       // imageUrl:
-      // 'https://www.glenstone.org/wp-content/uploads/prod/2018/08/SERRr_GF_ToLift-731x548.jpg',
+      // 'https: 
+      //
       price: 350000
     }),
     Product.create({
