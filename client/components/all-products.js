@@ -109,7 +109,7 @@ export class AllProducts extends React.Component {
             </div>
           ))}
         </div>
-        <div>
+        <div className="product-form">
           {user.isAdmin ? (
             <ProductForm addProduct={this.props.addProduct} />
           ) : (

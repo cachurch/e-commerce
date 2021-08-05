@@ -7,7 +7,6 @@ const CHECKEDOUT = 'CHECKEDOUT'
 //ACTION CREATORS - used to update state, goes to reducer to update via the dispatch (sending an obj)
 
 const checkedOutOrder = order => {
-  console.log('store: order', order)
   return {
     type: CHECKEDOUT,
     order
@@ -21,16 +20,13 @@ const initialState = {}
 
 export const checkoutOrder = id => async dispatch => {
   try {
-    console.log('id', id)
     const user = await axios.get('/auth/me')
-    console.log('user', user)
     if (user.data.id) {
       console.log('checked out!')
       const {data} = await axios.put(`/api/cart/checkout/${id}`)
       dispatch(checkedOutOrder(data))
     } else {
-      console.log('checkout guest user!')
-      // console.log('thunk: item', item)
+      console.log('checkedout guest user!')
       // dispatch(decrementedOrderItem(removeFromLocalStorage(item)))
     }
   } catch (error) {

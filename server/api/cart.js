@@ -57,7 +57,6 @@ router.post('/', async (req, res, next) => {
       newProduct.dataValues.orderItem = newItem
 
       res.json({userCart: userCart[0], newItem: newProduct})
-      // res.json({userCart: userCart[0].dataValues, newItem: newItem.dataValues})
     } else {
       res.status(304).send('Please Login!')
     }
@@ -91,8 +90,6 @@ router.put('/increment/:id', async (req, res, next) => {
 router.put('/decrement/:id', async (req, res, next) => {
   try {
     const item = await OrderItem.findByPk(req.params.id)
-    // console.log('item >>>>', item)
-    // console.log('user >>>>', req.user)
     if (item) {
       if (!await item.checkOwnership(req.user)) {
         return res.sendStatus(403)
@@ -117,16 +114,6 @@ router.put('/checkout/:id', async (req, res, next) => {
     next(error)
   }
 })
-// router.put('/checkout/:id', async (req, res, next) => {
-//   try {
-//     const checkedOut = await Order.findByPk(req.params.id)
-//     checkedOut.dataValues.isComplete = true
-//     await checkedOut.save()
-//     res.send(checkedOut)
-//   } catch (error) {
-//     next(error)
-//   }
-// })
 
 router.delete('/:id', async (req, res, next) => {
   try {
@@ -145,7 +132,6 @@ router.delete('/:id', async (req, res, next) => {
   }
 })
 
-//Notes
 // const hello = 'hi'
 // if (req.session.order) {
 //   const guestCart = await Order.findOne({

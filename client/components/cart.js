@@ -30,10 +30,6 @@ export class Cart extends React.Component {
     const user = this.props.user || {}
     const order = this.props.order.products || []
     const orderId = this.props.order.id || {}
-    console.log('cart', this.props.order)
-    // const orderItems = this.props.order.products || []
-    // console.log('(react cart component) order:', order)
-    // console.log('(react cart component) user:', user)
 
     return (
       <div>

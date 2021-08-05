@@ -21,7 +21,6 @@ const gotOrder = order => ({
 })
 
 const addedOrderItem = ({userCart, newItem}) => {
-  console.log('usercart: ', userCart, newItem)
   return {
     type: ADDED_ORDER_ITEM,
     userCart,
@@ -30,7 +29,6 @@ const addedOrderItem = ({userCart, newItem}) => {
 }
 
 const incrementedOrderItem = item => {
-  console.log('store item: ', item)
   return {
     type: INCREMENTED_ORDER_ITEM,
     item
@@ -38,8 +36,6 @@ const incrementedOrderItem = item => {
 }
 
 const decrementedOrderItem = item => {
-  console.log('action creator item: ', item)
-
   return {
     type: DECREMENTED_ORDER_ITEM,
     item
@@ -47,7 +43,6 @@ const decrementedOrderItem = item => {
 }
 
 const checkedOutOrder = order => {
-  console.log('store: order', order)
   return {
     type: CHECKEDOUT,
     order
@@ -55,7 +50,6 @@ const checkedOutOrder = order => {
 }
 
 const deletedOrderItem = id => {
-  console.log('action creator id:', id)
   return {
     type: DELETED_ORDER_ITEM,
     id
@@ -68,15 +62,12 @@ const initialState = {}
 //THUNK CREATORS
 export const fetchOrder = () => async dispatch => {
   try {
-    console.log('hit the fetch order thunk!')
     const user = await axios.get('/auth/me')
     if (user.data.id) {
       const {data} = await axios.get('/api/cart')
-      // console.log('this data is from the backend')
       dispatch(gotOrder(data))
     } else {
       dispatch(gotOrder(getCartFromLS()))
-      // console.log('this data is from the browser')
     }
   } catch (error) {
     console.error(error)
@@ -87,11 +78,9 @@ export const addOrderItem = item => async dispatch => {
   try {
     const user = await axios.get('/auth/me')
     if (user.data.id) {
-      console.log('hit the add order thunk!')
       const {data} = await axios.post('/api/cart', item)
       dispatch(addedOrderItem(data))
     } else {
-      console.log('hit the add order thunk!')
       dispatch(addedOrderItem(addToLocalStorage(item)))
     }
   } catch (error) {
@@ -102,13 +91,10 @@ export const addOrderItem = item => async dispatch => {
 export const incrementOrderItem = (id, item) => async dispatch => {
   try {
     const user = await axios.get('/auth/me')
-    console.log('THUNK: user.data.id', user)
     if (user.data.id) {
-      console.log('hit the increment thunk!')
       const {data} = await axios.put(`/api/cart/increment/${id}`)
       dispatch(incrementedOrderItem(data))
     } else {
-      console.log('hit the increment thunk!')
       dispatch(incrementedOrderItem(addToLocalStorage(item)))
     }
   } catch (error) {
@@ -120,12 +106,9 @@ export const decrementOrderItem = (id, item) => async dispatch => {
   try {
     const user = await axios.get('/auth/me')
     if (user.data.id) {
-      console.log('hit the decrement thunk!')
       const {data} = await axios.put(`/api/cart/decrement/${id}`)
       dispatch(decrementedOrderItem(data))
     } else {
-      console.log('hit the decrement thunk!')
-      console.log('thunk: item', item)
       dispatch(decrementedOrderItem(removeFromLocalStorage(item)))
     }
   } catch (error) {
@@ -135,16 +118,12 @@ export const decrementOrderItem = (id, item) => async dispatch => {
 
 export const checkoutOrder = id => async dispatch => {
   try {
-    console.log('id', id)
     const user = await axios.get('/auth/me')
-    console.log('user', user)
     if (user.data.id) {
-      console.log('checked out!')
       const {data} = await axios.put(`/api/cart/checkout/${id}`)
       dispatch(checkedOutOrder(data))
     } else {
       console.log('checkout guest user!')
-      // console.log('thunk: item', item)
       // dispatch(decrementedOrderItem(removeFromLocalStorage(item)))
     }
   } catch (error) {
@@ -156,11 +135,9 @@ export const deleteOrderItem = (id, item) => async dispatch => {
   try {
     const user = await axios.get('/auth/me')
     if (user.data.id) {
-      console.log('hit the delete thunk!')
       await axios.delete(`/api/cart/${id}`)
       dispatch(deletedOrderItem(id))
     } else {
-      console.log('hit the delete thunk!')
       dispatch(deletedOrderItem(deleteFromLocalStorage(item)))
     }
   } catch (error) {

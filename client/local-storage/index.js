@@ -2,7 +2,6 @@ const {default: product} = require('../store/product')
 
 function addToLocalStorage(product) {
   //add to local storage
-  console.log('hit the local storage function!')
   let userCart
   let cart = {items: {}, total: 0}
   if (!localStorage.getItem('cart')) {
@@ -28,7 +27,6 @@ function addToLocalStorage(product) {
 }
 
 function removeFromLocalStorage(product) {
-  console.log('hit the remove from local storage function')
   if (!localStorage.getItem('cart')) {
     //
   } else {
@@ -47,8 +45,6 @@ function removeFromLocalStorage(product) {
   }
 }
 function deleteFromLocalStorage(product) {
-  console.log('hit the delete from local storage function')
-
   if (!localStorage.getItem('cart')) {
     //
   } else {
@@ -61,7 +57,6 @@ function deleteFromLocalStorage(product) {
 }
 
 function deleteCart() {
-  console.log('cart deleted')
   if (!localStorage.getItem('cart')) {
     //
   } else {

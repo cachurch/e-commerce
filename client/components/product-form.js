@@ -1,4 +1,5 @@
 import React from 'react'
+import './style/product-form.css'
 
 export default class ProductForm extends React.Component {
   constructor() {
@@ -41,46 +42,48 @@ export default class ProductForm extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <h2>Add Product</h2>
-        <label>
-          Artist:
-          <input
-            type="text"
-            name="artist"
-            onChange={this.handleChange}
-            value={this.state.artist}
-          />
-        </label>
-        <label>
-          Title:
-          <input
-            type="text"
-            name="title"
-            onChange={this.handleChange}
-            value={this.state.title}
-          />
-        </label>
-        <label>
-          Price:
-          <input
-            type="integer"
-            name="price"
-            onChange={this.handleChange}
-            value={this.state.price}
-          />
-        </label>
-        <label>
-          Image Url:
-          <input
-            type="text"
-            name="imageUrl"
-            onChange={this.handleChange}
-            value={this.state.imageUrl}
-          />
-        </label>
-        <button type="submit">Add New Product</button>
-      </form>
+      <div className="product-form">
+        <form onSubmit={this.handleSubmit}>
+          <h2>Add Product</h2>
+          <label>
+            Artist:
+            <input
+              type="text"
+              name="artist"
+              onChange={this.handleChange}
+              value={this.state.artist}
+            />
+          </label>
+          <label>
+            Title:
+            <input
+              type="text"
+              name="title"
+              onChange={this.handleChange}
+              value={this.state.title}
+            />
+          </label>
+          <label>
+            Price:
+            <input
+              type="integer"
+              name="price"
+              onChange={this.handleChange}
+              value={this.state.price}
+            />
+          </label>
+          <label>
+            Image Url:
+            <input
+              type="text"
+              name="imageUrl"
+              onChange={this.handleChange}
+              value={this.state.imageUrl}
+            />
+          </label>
+          <button type="submit">Add New Product</button>
+        </form>
+      </div>
     )
   }
 }

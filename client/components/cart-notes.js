@@ -60,9 +60,6 @@ export class Cart extends React.Component {
     const user = this.props.user || {}
     const order = this.props.order || {}
     const orderItems = this.props.order.products || []
-    // console.log('order', order)
-    // console.log('orderItems', orderItems)
-    // console.log('hi i rendered')
     //Pull in cart items from Local Storage & Change to an Array > Move this to the redux store
     const cartItems = getCartFromLS().items
     let items = []
